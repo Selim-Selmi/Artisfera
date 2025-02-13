@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-lg">
+                <div class="card-body">
+                    <h2 class="text-center">{{ title }}</h2>
+
+                    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+
+                    <div class="form-group mt-3">
+                        {{ form_label(form.type_p, 'Type de Style') }}
+                        {{ form_widget(form.type_p, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(form.type_p, {'attr': {'class': 'text-danger'}}) }}
+                    </div>
+
+                    <div class="form-group mt-3">
+                        {{ form_label(form.description, 'Description') }}
+                        {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(form.description, {'attr': {'class': 'text-danger'}}) }}
+                    </div>
+
+                    <div class="form-group mt-3">
+                        {{ form_label(form.extab, 'Image') }}
+                        {{ form_widget(form.extab, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(form.extab, {'attr': {'class': 'text-danger'}}) }}
+                    </div>
+
+                    <div class="text-center mt-4">
+                        {{ form_widget(form.Enregistrer, {'attr': {'class': 'btn btn-primary'}}) }}
+                    </div>
+
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

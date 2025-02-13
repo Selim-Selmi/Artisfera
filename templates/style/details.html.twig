@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails de la Style{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <div class="card shadow-sm">
+        <div class="card-body text-center">
+            {% if style.extab %}
+                <img src="{{ asset('uploads/' ~ style.extab) }}" alt="{{ style.extab }}" class="img-fluid rounded" style="max-height: 400px;">
+            {% else %}
+                <p class="text-muted">Aucune image disponible</p>
+            {% endif %}
+            <h2 class="mt-3">{{ style.typep | upper }}</h2>
+            <p class="card-text"><b>Description de ce type :</b>{{ style.description }}</p>
+            <p class="card-text"><b>Nombre de tableau posés de ce type : </b>{{ style.peintures | length }}</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

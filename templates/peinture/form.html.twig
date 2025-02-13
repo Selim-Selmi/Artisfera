@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-lg">
+                <div class="card-body">
+                    <h2 class="text-center">{{ title }}</h2>
+
+                    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+
+                    <div class="form-group mt-3">
+                        {{ form_label(form.titre, 'Titre de la Peinture') }}
+                        {{ form_widget(form.titre, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(form.titre, {'attr': {'class': 'text-danger'}}) }}
+                    </div>
+
+                    <div class="form-group mt-3">
+                        {{ form_label(form.date_cr, 'Date de Création') }}
+                        {{ form_widget(form.date_cr, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(form.date_cr, {'attr': {'class': 'text-danger'}}) }}
+                    </div>
+
+                    <div class="form-group mt-3">
+                        {{ form_label(form.tableau, 'Image du Tableau') }}
+                        {{ form_widget(form.tableau, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(form.tableau, {'attr': {'class': 'text-danger'}}) }}
+                    </div>
+
+                    <div class="form-group mt-3">
+                        {{ form_label(form.type, 'Style de Peinture') }}
+                        {{ form_widget(form.type, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(form.type, {'attr': {'class': 'text-danger'}}) }}
+                    </div>
+
+                    <div class="text-center mt-4">
+                        {{ form_widget(form.Envoyer, {'attr': {'class': 'btn btn-primary'}}) }}
+                    </div>
+
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
