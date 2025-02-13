@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}Hello PlaylistController!{% endblock %}
+
+{% block body %}
+<section class="page-header" style="background-image: url(assets/page-header-bg-1-1.jpg);">
+            <div class="container">
+                <h2>Playlist</h2>
+            </div><!-- /.container -->
+        </section><!-- /.page-header -->
+
+<h1>Playlists List </h1>
+<a href="{{path('app_Playlist_new')}}">Add Playlist</a>
+<div>
+{# {% if Playlists is defined and Playlists is not empty %}
+<p>Tableau contient des données.</p>
+{% else %}
+<p>Tableau vide.</p>
+{% endif %} #}
+{% for Playlist in Playlists %}
+
+<p> <b> titre : </b> {{ Playlist.titreP | upper }} </p>
+<p> <b> user_id : </b> {{ Playlist.userId}} </p>
+<p> <b>date : </b> {{ Playlist.dateCreation  | date('d-m-Y')}} </p>
+<p> <b>description : </b> {{ Playlist.description}} </p>
+
+{# <a href="{{path('app_Playlist_details',{id: Playlist.id})}}">Details<a/>#}
+ <a href="{{path('app_Playlist_edit',{id: Playlist.id})}}">Edit<a/>
+ <a href="{{path('app_Playlist_remove',{id: Playlist.id})}}">Delete<a/> <hr> 
+ {% else %}
+<p>Le Tableau est vide.</p>
+{% endfor %}
+
+</div>
+
+
+{% endblock %}
