@@ -13,13 +13,84 @@
     background-color: darkgreen; /* Assombrit au survol */
 }
 
+.exhibition-two {
+    padding: 60px 0;
+    background-color: #f8f8f8;
+}
+
+.exhibition-two__single {
+    border-radius: 10px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.exhibition-two__single:hover {
+    transform: translateY(-5px);
+}
+
+.exhibition-two__image {
+    width: 100%;
+    height: 250px; /* Fixe une hauteur uniforme pour toutes les images */
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.exhibition-two__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Empêche la déformation des images */
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.exhibition-two__content {
+    padding: 15px;
+    text-align: center;
+}
+
+.exhibition-two__content h3 {
+    font-size: 20px;
+    margin-bottom: 5px;
+}
+
+.exhibition-two__content span {
+    display: block;
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.exhibition-two__content p {
+    font-size: 16px;
+    color: #333;
+}
+
+.exhibition-two__link {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 8px 15px;
+    border-radius: 5px;
+    background: #ff5a5f;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background 0.3s ease;
+}
+
+.exhibition-two__link:hover {
+    background: #e0484e;
+}
 
 
 </style>
-<head>
+<head>{% block head %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestion des peintures</title>
+    <title>Artisfera</title>
 
     <!-- favicons -->
     <link rel="apple-touch-icon" sizes="180x180" href="{{asset('assets/images/favicon/apple-touch-icon.png')}}">
@@ -48,6 +119,7 @@
     <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
     <link rel="stylesheet" href="{{asset('assets/css/responsive.css')}}">
     {% endblock %} 
+    {% endblock %} 
 
 </head>
 
@@ -61,12 +133,12 @@
         <div class="topbar-one topbar-one__home-two">
             <div class="container">
                 <div class="topbar-one__left">
-                    <p>Look at the Calender for the Upcoming Exhibitions.</p>
+                    <p>Bienvenue à notre site et bonne navigation !!</p>
                 </div><!-- /.topbar-one__left -->
                 <div class="topbar-one__right">
-                    <a href="#"><i class="far fa-clock"></i> Mon - Sat 9.00 - 18.00</a>
-                    <a href="#"><i class="fa fa-phone-alt"></i> (251) 235-3256</a>
-                    <a href="#" class="thm-btn topbar__btn">Buy Tickets</a><!-- /.thm-btn -->
+{#                     <a href="#"><i class="far fa-clock"></i> Mon - Sat 9.00 - 18.00</a>
+ #}                    <a href="#"><i class=""></i> (+216) 22 468 791</a>
+                   {#  <a href="#" class="thm-btn topbar__btn">Buy Tickets</a><!-- /.thm-btn --> #}
                 </div><!-- /.topbar-one__right -->
             </div><!-- /.container -->
         </div><!-- /.topbar-one -->
@@ -75,20 +147,21 @@
             <div class="container">
                 <div class="inner-container">
                     <div class="logo-box">
-                        <a href="index.html">
-                            <img src="assets/images/logo-1-1.png" alt width="143">
+                        <a href={{path('app_base')}}>
+                            <img src="assets/images/o.png" alt width="143">
                         </a>
                         <a href="#" class="side-menu__toggler"><i class="muzex-icon-menu"></i></a>
                     </div><!-- /.logo-box -->
                     <div class="main-nav__main-navigation">
                         <ul class="main-nav__navigation-box">
+                        <li><a href={{path('app_base')}}>Accueil</a></li>
                             <li class="dropdown">
-                                <a href="index.html">Peinture</a>
+                                <a href="#">Peinture</a>
                                 <ul>
-                                    <li><a href="index.html">Ajout des peintures</a></li>
-                                    <li><a href="index-2.html">Liste des peinture</a></li>
-                                    <li><a href="index-3.html">Ajout d'un style</a></li>
-                                    <li><a href="index-rtl.html">Liste des styles</a></li>
+                                    <li><a href={{path('app_peinture_new')}}>Ajout des peintures</a></li>
+                                    <li><a href={{ path('app_peinture_list')}}>Liste des peinture</a></li>
+                                    <li><a href={{ path('app_style_new')}}>Ajout d'un style</a></li>
+                                    <li><a href={{ path('app_style_list')}}>Liste des styles</a></li>
                                    {#  <li class="dropdown">
                                         <a href="#">Header Styles</a>
                                         <ul>
@@ -99,19 +172,9 @@
                                     </li> #}
                                 </ul>
                             </li>
+                            <li><a href="{{ path('app_Musique_list')}}">Musique</a></li>
                             <li class="dropdown">
-                                <a href="about.html">About</a>
-                                <ul>
-                                    <li><a href="about.html">About Us</a></li>
-                                    <li><a href="team.html">Team</a></li>
-                                    <li><a href="donate.html">Donate</a></li>
-                                    <li><a href="venue.html">Veneu</a></li>
-                                    <li><a href="faq.html">FAQ</a></li>
-                                    <li><a href="membership.html">Membership</a></li>
-                                </ul>
-                            </li>
-                            <li class="dropdown">
-                                <a href="collection-grid.html">Collections</a>
+                                <a href="#">Evénements</a>
                                 <ul>
                                     <li><a href="collection-fullwidth.html">Collections Full</a></li>
                                     <li><a href="collection-grid.html">Collections Grid</a></li>
@@ -119,17 +182,8 @@
                                 </ul>
                             </li>
                             <li class="dropdown">
-                                <a href="#">Pages</a>
+                                <a href="#">Textile</a>
                                 <ul>
-                                    <li class="dropdown">
-                                        <a href="event-1.html">Events</a>
-                                        <ul>
-                                            <li><a href="event-1.html">Events 01</a></li>
-                                            <li><a href="event-2.html">Events 02</a></li>
-                                            <li><a href="event-3.html">Events 03</a></li>
-                                            <li><a href="event-details.html">Events Details</a></li>
-                                        </ul>
-                                    </li>
                                     <li><a href="about.html">About Us</a></li>
                                     <li><a href="team.html">Team</a></li>
                                     <li><a href="donate.html">Donate</a></li>
@@ -139,7 +193,7 @@
                                 </ul>
                             </li>
                             <li class="dropdown">
-                                <a href="news-standard.html">News</a>
+                                <a href="#">Céramique</a>
                                 <ul>
                                     <li><a href="news-standard.html">News Standard</a></li>
                                     <li><a href="news-grid.html">News Grid</a></li>
@@ -147,13 +201,12 @@
                                     <li><a href="news-details.html">News Details</a></li>
                                 </ul>
                             </li>
-                            <li><a href="contact.html">Contact</a></li>
                         </ul><!-- /.main-nav__navigation-box -->
                     </div><!-- /.main-nav__main-navigation -->
-                    <div class="main-nav__right">
+                   {#  <div class="main-nav__right">
                         <a href="#" class="search-popup__toggler"><i class="muzex-icon-search"></i></a>
                         <a class="sidemenu-icon side-content__toggler" href="#"><i class="muzex-icon-menu"></i></a>
-                    </div><!-- /.main-nav__right -->
+                    </div><!-- /.main-nav__right --> #}
                 </div><!-- /.inner-container -->
             </div><!-- /.container -->
         </nav><!-- /.main-nav-one -->
@@ -165,37 +218,37 @@
             <div class="banner-carousel thm__owl-carousel owl-theme owl-carousel" data-options='{"loop": true, "items": 1, "margin": 0, "dots": false, "nav": true, "animateOut": "fadeOut", "animateIn": "fadeIn", "active": true, "smartSpeed": 1000, "autoplay": true, "autoplayTimeout": 6000, "autoplayHoverPause": false}'>
                 <!-- Slide Item -->
                 <div class="slide-item">
-                    <div class="image-layer lazy-image" style="background-image: url('assets/images/main-slider/banner-2-1.jpg');"></div>
+                    <div class="image-layer lazy-image" style="background-image: url('assets/images/main-slider/dd.jpg');"></div>
                     <div class="container">
                         <div class="content-box text-center">
-                            <h3>Awesome of Collection</h3>
-                            <h2>The World’s Leading Museum <br>of Contemporary Art</h2>
+                            <h3>La peinture, l'art en couleurs</h3>
+                            <h2>Découvrez des œuvres picturales uniques et laissez-vous inspirer par la beauté de l’art</h2>
                             <div class="btn-box">
-                                <a href="#" class="thm-btn btn-style-one">Learn More</a>
+                                <a href={{ path('app_peinture_list')}} class="thm-btn btn-style-one">Learn More</a>
                             </div>
                         </div>
                     </div>
                 </div>
                 <!-- Slide Item -->
                 <div class="slide-item">
-                    <div class="image-layer lazy-image" style="background-image: url('assets/images/main-slider/banner-2-2.jpg');"></div>
+                    <div class="image-layer lazy-image" style="background-image: url('assets/images/main-slider/f.jpg');"></div>
                     <div class="container">
                         <div class="content-box text-center">
-                            <h3>The Past is our Future</h3>
-                            <h2>Discover the Treasures of a Egypt <br> Historical Museum</h2>
+                            <h3>Les nouveautés du monde musical</h3>
+                            <h2>Découvrez de nouvelles musiques et créez votre playlist</h2>
                             <div class="btn-box">
-                                <a href="#" class="thm-btn btn-style-one">Learn More</a>
+                                <a href="{{ path('app_Musique_list')}}" class="thm-btn btn-style-one">Learn More</a>
                             </div>
                         </div>
                     </div>
                 </div>
                 <!-- Slide Item -->
                 <div class="slide-item">
-                    <div class="image-layer lazy-image" style="background-image: url('assets/images/main-slider/banner-2-3.jpg');"></div>
+                    <div class="image-layer lazy-image" style="background-image: url('assets/images/main-slider/w.jpg');"></div>
                     <div class="container">
                         <div class="content-box text-center">
-                            <h3>Opening On Sat. Oct 20, 2020</h3>
-                            <h2>World’s Leading Museum of History <br> Over 2.3 k Collection</h2>
+                            <h3>Les événements sont des moments où la créativité prend vie.</h3>
+                            <h2>Découvrez nos évenemnts disponibles <br> Et montrez nous votre créativité</h2>
                             <div class="btn-box">
                                 <a href="#" class="thm-btn btn-style-one">Learn More</a>
                             </div>
@@ -205,7 +258,7 @@
             </div>
         </section>
         <!-- end banner section -->
-        <section class="cta-two cta-two__home-two">
+        {# <section class="cta-two cta-two__home-two">
             <div class="container">
                 <div class="inner-container">
                     <div class="row no-gutters">
@@ -272,32 +325,24 @@
                 <!-- /.inner-container -->
             </div>
             <!-- /.container -->
-       </section>
+       </section> #}
         <!-- /.cta-two -->
         <section class="about-two" style="background-image: url(assets/images/backgrounds/event-bg-1-1.jpg);">
 
-            <img src="{{asset('assets/images/shapes/about-2-sculpture.png')}}" alt="" class="about-two__sclupture">
-            <div class="container">
+{#             <img src="{{asset('assets/images/shapes/about-2-sculpture.png')}}" alt="" class="about-two__sclupture">
+ #}            <div class="container">
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="about-two__content">
                             <div class="block-title">
-                                <p>About Muzex</p>
-                                <h3>The Art Gallery of San Francisco</h3>
+                                <p>Artisfera</p>
+                                <h3>Un des meilleurs sites modernes dans le domaine de l'art:</h3>
                             </div>
                             <!-- /.block-title -->
                             <p class="about-two__highlight">
-                                Welcome to the World’s Leading Museum of Modern Art. It includes
-                                works of art created during the period stretching from about 1860 to
-                                the 1970s.
+                                Notre site web est une plateforme dédiée à l’art sous toutes ses formes. Découvrez une galerie d'œuvres uniques, explorez le talent des artistes et laissez-vous inspirer par la créativité. Que vous soyez passionné d'art ou simple curieux, notre espace vous offre une immersion visuelle et émotionnelle dans le monde de la peinture et de l'artisanat.
                             </p>
                             <!-- /.about-two__highlight -->
-                            <p>
-                                Man face fruit divided seasons herb from herb moveth whose. Dominion
-                                gathered winged morning, man won’t had fly beginning. Winged have
-                                saying behold morning greater void shall created whose blessed herb
-                                light fruitful open void without itself whales.
-                            </p>
                         </div>
                         <!-- /.about-two__content -->
                     </div>
@@ -317,209 +362,64 @@
         <!-- /.about-two -->
 
         <section class="exhibition-two">
-            <div class="container">
-                <div class="block-title-two text-center">
-                    <span class="block-title-two__line"></span><!-- /.block-title-two__line -->
-                    <p>What’s Going on</p>
-                    <h3>Upcoming Exhibitions</h3>
-                </div><!-- /.block-title-two -->
-                <div class="shadowed__carousel owl-carousel owl-theme thm__owl-carousel exhibition-two__carousel" data-options='{
-			"items": 3, "margin": 40, "dots": false, "nav": true, "smartSpeed": 700, "loop": true, "autoplay": true, "autoplayTimeout": 5000, "autoplayHoverPause": true, "responsive": {
-				"1199": { "items": 3, "margin": 40},
-				"991": { "items": 2, "margin": 40},
-				"767": { "items": 2, "margin": 30},
-				"575": { "items": 1, "margin": 0},
-				"0": { "items": 1, "margin": 0}
-			}
-		}'>
-                    <div class="item">
-                        <div class="exhibition-two__single">
-                            <div class="exhibition-two__image">
-                                <img src="assets/images/exhibition/exhibition-2-1.jpg" alt="">
-                            </div><!-- /.exhibition-two__image -->
-                            <div class="exhibition-two__content">
-                                <h3><a href="event-details.html">The Exhibits Civilization.</a></h3>
-                                <span>Oct 20, 2020 - Oct 25, 2020</span>
-                                <p>Man face fruit divided seasons herb from herb moveth whose dominion gathered winged.</p>
-                                <a href="event-details.html" class="exhibition-two__link">Learn More</a>
-                                <!-- /.exhibition-two__link -->
-
-                            </div><!-- /.exhibition-two__content -->
-                        </div><!-- /.exhibition-two__single -->
-
-                    </div><!-- /.item -->
-                    <div class="item">
-                        <div class="exhibition-two__single">
-                            <div class="exhibition-two__image">
-                                <img src="assets/images/exhibition/exhibition-2-3.jpg" alt="">
-                            </div><!-- /.exhibition-two__image -->
-                            <div class="exhibition-two__content">
-                                <h3><a href="event-details.html">Latin American Art</a></h3>
-                                <span>Oct 20, 2020 - Oct 25, 2020</span>
-                                <p>Man face fruit divided seasons herb from herb moveth whose dominion gathered winged.</p>
-                                <a href="event-details.html" class="exhibition-two__link">Learn More</a>
-                                <!-- /.exhibition-two__link -->
-
-                            </div><!-- /.exhibition-two__content -->
-                        </div><!-- /.exhibition-two__single -->
-
-                    </div><!-- /.item -->
-                    <div class="item">
-                        <div class="exhibition-two__single">
-                            <div class="exhibition-two__image">
-                                <img src="assets/images/exhibition/exhibition-2-2.jpg" alt="">
-                            </div><!-- /.exhibition-two__image -->
-                            <div class="exhibition-two__content">
-                                <h3><a href="event-details.html">Classicita of Greece and </a></h3>
-                                <span>Oct 20, 2020 - Oct 25, 2020</span>
-                                <p>Man face fruit divided seasons herb from herb moveth whose dominion gathered winged.</p>
-                                <a href="event-details.html" class="exhibition-two__link">Learn More</a>
-                                <!-- /.exhibition-two__link -->
-
-                            </div><!-- /.exhibition-two__content -->
-                        </div><!-- /.exhibition-two__single -->
-
-                    </div><!-- /.item -->
-                    <div class="item">
-                        <div class="exhibition-two__single">
-                            <div class="exhibition-two__image">
-                                <img src="assets/images/exhibition/exhibition-2-1.jpg" alt="">
-                            </div><!-- /.exhibition-two__image -->
-                            <div class="exhibition-two__content">
-                                <h3><a href="event-details.html">Latin American Art</a></h3>
-                                <span>Oct 20, 2020 - Oct 25, 2020</span>
-                                <p>Man face fruit divided seasons herb from herb moveth whose dominion gathered winged.</p>
-                                <a href="event-details.html" class="exhibition-two__link">Learn More</a>
-                                <!-- /.exhibition-two__link -->
-
-                            </div><!-- /.exhibition-two__content -->
-                        </div><!-- /.exhibition-two__single -->
-
-                    </div><!-- /.item -->
-                    <div class="item">
-                        <div class="exhibition-two__single">
-                            <div class="exhibition-two__image">
-                                <img src="assets/images/exhibition/exhibition-2-3.jpg" alt="">
-                            </div><!-- /.exhibition-two__image -->
-                            <div class="exhibition-two__content">
-                                <h3><a href="event-details.html">The Exhibits Civilization.</a></h3>
-                                <span>Oct 20, 2020 - Oct 25, 2020</span>
-                                <p>Man face fruit divided seasons herb from herb moveth whose dominion gathered winged.</p>
-                                <a href="event-details.html" class="exhibition-two__link">Learn More</a>
-                                <!-- /.exhibition-two__link -->
-
-                            </div><!-- /.exhibition-two__content -->
-                        </div><!-- /.exhibition-two__single -->
-
-                    </div><!-- /.item -->
-                    <div class="item">
-                        <div class="exhibition-two__single">
-                            <div class="exhibition-two__image">
-                                <img src="assets/images/exhibition/exhibition-2-2.jpg" alt="">
-                            </div><!-- /.exhibition-two__image -->
-                            <div class="exhibition-two__content">
-                                <h3><a href="event-details.html">Latin American Art</a></h3>
-                                <span>Oct 20, 2020 - Oct 25, 2020</span>
-                                <p>Man face fruit divided seasons herb from herb moveth whose dominion gathered winged.</p>
-                                <a href="event-details.html" class="exhibition-two__link">Learn More</a>
-                                <!-- /.exhibition-two__link -->
-
-                            </div><!-- /.exhibition-two__content -->
-                        </div><!-- /.exhibition-two__single -->
-
-                    </div><!-- /.item -->
-                    <div class="item">
-                        <div class="exhibition-two__single">
-                            <div class="exhibition-two__image">
-                                <img src="assets/images/exhibition/exhibition-2-1.jpg" alt="">
-                            </div><!-- /.exhibition-two__image -->
-                            <div class="exhibition-two__content">
-                                <h3><a href="event-details.html">Classicita of Greece and </a></h3>
-                                <span>Oct 20, 2020 - Oct 25, 2020</span>
-                                <p>Man face fruit divided seasons herb from herb moveth whose dominion gathered winged.</p>
-                                <a href="event-details.html" class="exhibition-two__link">Learn More</a>
-                                <!-- /.exhibition-two__link -->
-
-                            </div><!-- /.exhibition-two__content -->
-                        </div><!-- /.exhibition-two__single -->
-
-                    </div><!-- /.item -->
-                    <div class="item">
-                        <div class="exhibition-two__single">
-                            <div class="exhibition-two__image">
-                                <img src="assets/images/exhibition/exhibition-2-1.jpg" alt="">
-                            </div><!-- /.exhibition-two__image -->
-                            <div class="exhibition-two__content">
-                                <h3><a href="event-details.html">The Exhibits Civilization.</a></h3>
-                                <span>Oct 20, 2020 - Oct 25, 2020</span>
-                                <p>Man face fruit divided seasons herb from herb moveth whose dominion gathered winged.</p>
-                                <a href="event-details.html" class="exhibition-two__link">Learn More</a>
-                                <!-- /.exhibition-two__link -->
-
-                            </div><!-- /.exhibition-two__content -->
-                        </div><!-- /.exhibition-two__single -->
-
-                    </div><!-- /.item -->
-                    <div class="item">
-                        <div class="exhibition-two__single">
-                            <div class="exhibition-two__image">
-                                <img src="assets/images/exhibition/exhibition-2-2.jpg" alt="">
-                            </div><!-- /.exhibition-two__image -->
-                            <div class="exhibition-two__content">
-                                <h3><a href="event-details.html">Latin American Art</a></h3>
-                                <span>Oct 20, 2020 - Oct 25, 2020</span>
-                                <p>Man face fruit divided seasons herb from herb moveth whose dominion gathered winged.</p>
-                                <a href="event-details.html" class="exhibition-two__link">Learn More</a>
-                                <!-- /.exhibition-two__link -->
-
-                            </div><!-- /.exhibition-two__content -->
-                        </div><!-- /.exhibition-two__single -->
-
-                    </div><!-- /.item -->
-                    <div class="item">
-                        <div class="exhibition-two__single">
-                            <div class="exhibition-two__image">
-                                <img src="assets/images/exhibition/exhibition-2-3.jpg" alt="">
-                            </div><!-- /.exhibition-two__image -->
-                            <div class="exhibition-two__content">
-                                <h3><a href="event-details.html">Classicita of Greece and </a></h3>
-                                <span>Oct 20, 2020 - Oct 25, 2020</span>
-                                <p>Man face fruit divided seasons herb from herb moveth whose dominion gathered winged.</p>
-                                <a href="event-details.html" class="exhibition-two__link">Learn More</a>
-                                <!-- /.exhibition-two__link -->
-
-                            </div><!-- /.exhibition-two__content -->
-                        </div><!-- /.exhibition-two__single -->
-
-                    </div><!-- /.item -->
-                </div><!-- /.exhibition-two__carousel owl-carousel owl-theme thm__owl-carousel -->
-            </div><!-- /.container -->
-        </section><!-- /.exhibition-two -->
+    <div class="container">
+        <div class="block-title-two text-center">
+            <span class="block-title-two__line"></span>
+            <p>Découvrez nos œuvres</p>
+            <h3>Galerie des Peintures</h3>
+        </div>
+        <div class="shadowed__carousel owl-carousel owl-theme thm__owl-carousel exhibition-two__carousel" 
+             data-options='{
+                "items": 3, "margin": 40, "dots": false, "nav": true, "smartSpeed": 700, "loop": true, "autoplay": true, "autoplayTimeout": 5000, "autoplayHoverPause": true,
+                "responsive": {
+                    "1199": { "items": 3, "margin": 40},
+                    "991": { "items": 2, "margin": 40},
+                    "767": { "items": 2, "margin": 30},
+                    "575": { "items": 1, "margin": 0},
+                    "0": { "items": 1, "margin": 0}
+                }
+             }'>
+            {% for peinture in peintures %}
+                <div class="item">
+                    <div class="exhibition-two__single">
+                        <div class="exhibition-two__image">
+                            <img src="{{ asset('uploads/' ~ peinture.tableau) }}" alt="{{ peinture.titre }} class="card-img-top" style="height: 300px; object-fit: contain;">
+                        </div>
+                        <div class="exhibition-two__content">
+                            <h3>{{ peinture.titre }}</h3>
+                            <span>Créé le {{ peinture.dateCr | date('d-m-Y') }}</span>
+                            <a href="{{ path('app_peinture_details', {id: peinture.id}) }}" class="exhibition-two__link">En savoir plus</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
 
         <section class="cta-three">
             <div class="container">
                 <div class="inner-container wow fadeInUp" data-wow-duration="1500ms" style="background-image: url(assets/images/shapes/cta-bg-2-1.jpg);">
                     <div class="cta-three__title">
-                        <h3><span>On View</span> <br> at Museum</h3>
+                        <h3><span>A propos</span> <br>de notre site</h3>
                     </div><!-- /.cta-three__title -->
                     <div class="cta-three__content">
-                        <p>Capitalize on low hanging fruit to identify a ballpark value added activity to beta test. Override
-                            the digital divide with additiclick throughs Nanotechnology immersion.</p>
+                        <p>Les visiteurs pourront explorer une galerie d'œuvres d'art avec des images haute résolution et des descriptions détaillées,et un système de filtres permettra de rechercher des œuvres par catégorie, artiste ou date de creation.</p>
                         <div class="cta-three__list-wrap">
                             <ul class="list-unstyled cta-three__list">
-                                <li>Western & Non-Western cultures</li>
-                                <li>Artifacts and Antiquities</li>
-                                <li>Traditional Art</li>
+                                <li>Cultures occidentales</li>
+                                <li>Artefacts et antiquités</li>
+                                <li>Art traditionnel</li>
                             </ul><!-- /.list-unstyled cta-three__list -->
                             <ul class="list-unstyled cta-three__list">
-                                <li>Contemporary Design</li>
-                                <li>War History</li>
-                                <li>Middle Eastern Art</li>
+                                <li>Design contemporain</li>
+                                <li>Histoire de la guerre</li>
+                                <li>Art du Moyen-Orient</li>
                             </ul><!-- /.list-unstyled cta-three__list -->
                             <ul class="list-unstyled cta-three__list">
-                                <li>20th Century Design</li>
-                                <li>Arts of Global Africa</li>
-                                <li>Gardens</li>
+                                <li>Design du 20ᵉ siècle</li>
+                                <li>Arts de l'Afrique</li>
+                                <li>Art et Nature</li>
                             </ul><!-- /.list-unstyled cta-three__list -->
                         </div><!-- /.cta-three__list-wrap -->
                     </div><!-- /.cta-three__content -->
@@ -527,201 +427,54 @@
             </div><!-- /.container -->
         </section><!-- /.cta-three -->
 
-        <section class="collection-two">
-            <div class="container-fluid">
-                <div class="block-title-two text-center">
-                    <p>Gallery</p>
-                    <h3>Explore The Collection</h3>
-                </div><!-- /.block-title-two -->
-                <div class="collection-two__carousel shadowed__carousel thm__owl-carousel owl-carousel owl-theme" data-options='{
-			"loop": true, "margin": 0, "autoplay": true, "autoplayTimeout": 5000, "autoplayHoverPause": true, "items": 5, "smartSpeed": 700, "dots": false, "nav": true, "responsive": {
-				"1920": { "items": 5},
-				"1440": { "items": 4},
-				"1199": { "items": 4},
-				"991": { "items": 3},
-				"767": { "items": 2},
-				"575": { "items": 2},
-				"480": { "items": 2},
-				"0": { "items": 1}
-			}
-		}'>
+<div class="col-md-11">
+    <section class="collection-two">
+        <div class="container-fluid">
+            <div class="block-title-two text-center">
+                <p>Music</p>
+                <h3>Explorer les nouveautés de la musique</h3>
+            </div><!-- /.block-title-two -->
+            <div class="collection-two__carousel shadowed__carousel thm__owl-carousel owl-carousel owl-theme" data-options='{
+                "loop": true, "margin": 0, "autoplay": true, "autoplayTimeout": 5000, "autoplayHoverPause": true, "items": 5, "smartSpeed": 700, "dots": false, "nav": true, "responsive": {
+                    "1920": { "items": 5},
+                    "1440": { "items": 4},
+                    "1199": { "items": 4},
+                    "991": { "items": 3},
+                    "767": { "items": 2},
+                    "575": { "items": 2},
+                    "480": { "items": 2},
+                    "0": { "items": 1}
+                }
+            }'>
+                {% for Musique in Musiques %}
                     <div class="item">
                         <div class="collection-two__single">
                             <div class="collection-two__image">
-                                <img src="assets/images/collection/collection-2-1.jpg" alt="">
+                                <img src="{{ asset('uploads/photos/' ~ Musique.photo) }}" alt="{{ Musique.titre }}">
                             </div><!-- /.collection-two__image -->
                             <div class="collection-two__content">
-                                <h3><a href="#">St. Catherine Alexandria <br> in Prison</a></h3>
-                                <p>Linda M. Dugan</p>
+                                <h3><a href="#">{{ Musique.titre }}</a></h3>
+                                <p>{{ Musique.artistName }}</p>
                             </div><!-- /.collection-two__content -->
                         </div><!-- /.collection-two__single -->
                     </div><!-- /.item -->
-                    <div class="item">
-                        <div class="collection-two__single">
-                            <div class="collection-two__image">
-                                <img src="assets/images/collection/collection-2-2.jpg" alt="">
-                            </div><!-- /.collection-two__image -->
-                            <div class="collection-two__content">
-                                <h3><a href="#">Alexandria in <br> Prison</a></h3>
-                                <p>Linda M. Dugan</p>
-                            </div><!-- /.collection-two__content -->
-                        </div><!-- /.collection-two__single -->
-                    </div><!-- /.item -->
-                    <div class="item">
-                        <div class="collection-two__single">
-                            <div class="collection-two__image">
-                                <img src="assets/images/collection/collection-2-3.jpg" alt="">
-                            </div><!-- /.collection-two__image -->
-                            <div class="collection-two__content">
-                                <h3><a href="#">Tower of <br> Babel (Babylon)</a></h3>
-                                <p>Linda M. Dugan</p>
-                            </div><!-- /.collection-two__content -->
-                        </div><!-- /.collection-two__single -->
-                    </div><!-- /.item -->
-                    <div class="item">
-                        <div class="collection-two__single">
-                            <div class="collection-two__image">
-                                <img src="assets/images/collection/collection-2-4.jpg" alt="">
-                            </div><!-- /.collection-two__image -->
-                            <div class="collection-two__content">
-                                <h3><a href="#">The Lascaux <br> Cave</a></h3>
-                                <p>Linda M. Dugan</p>
-                            </div><!-- /.collection-two__content -->
-                        </div><!-- /.collection-two__single -->
-                    </div><!-- /.item -->
-                    <div class="item">
-                        <div class="collection-two__single">
-                            <div class="collection-two__image">
-                                <img src="assets/images/collection/collection-2-5.jpg" alt="">
-                            </div><!-- /.collection-two__image -->
-                            <div class="collection-two__content">
-                                <h3><a href="#">Mercenary Soldiers <br> In Ottoman</a></h3>
-                                <p>Linda M. Dugan</p>
-                            </div><!-- /.collection-two__content -->
-                        </div><!-- /.collection-two__single -->
-                    </div><!-- /.item -->
+                {% else %}
+                    <p class="text-center">No music available.</p>
+                {% endfor %}
+            </div>
+        </div>
+        </div>
+        
+    </section>
+    </div>
 
-
-                    <div class="item">
-                        <div class="collection-two__single">
-                            <div class="collection-two__image">
-                                <img src="assets/images/collection/collection-2-1.jpg" alt="">
-                            </div><!-- /.collection-two__image -->
-                            <div class="collection-two__content">
-                                <h3><a href="#">St. Catherine Alexandria <br> in Prison</a></h3>
-                                <p>Linda M. Dugan</p>
-                            </div><!-- /.collection-two__content -->
-                        </div><!-- /.collection-two__single -->
-                    </div><!-- /.item -->
-                    <div class="item">
-                        <div class="collection-two__single">
-                            <div class="collection-two__image">
-                                <img src="assets/images/collection/collection-2-2.jpg" alt="">
-                            </div><!-- /.collection-two__image -->
-                            <div class="collection-two__content">
-                                <h3><a href="#">Alexandria in <br> Prison</a></h3>
-                                <p>Linda M. Dugan</p>
-                            </div><!-- /.collection-two__content -->
-                        </div><!-- /.collection-two__single -->
-                    </div><!-- /.item -->
-                    <div class="item">
-                        <div class="collection-two__single">
-                            <div class="collection-two__image">
-                                <img src="assets/images/collection/collection-2-3.jpg" alt="">
-                            </div><!-- /.collection-two__image -->
-                            <div class="collection-two__content">
-                                <h3><a href="#">Tower of <br> Babel (Babylon)</a></h3>
-                                <p>Linda M. Dugan</p>
-                            </div><!-- /.collection-two__content -->
-                        </div><!-- /.collection-two__single -->
-                    </div><!-- /.item -->
-                    <div class="item">
-                        <div class="collection-two__single">
-                            <div class="collection-two__image">
-                                <img src="assets/images/collection/collection-2-4.jpg" alt="">
-                            </div><!-- /.collection-two__image -->
-                            <div class="collection-two__content">
-                                <h3><a href="#">The Lascaux <br> Cave</a></h3>
-                                <p>Linda M. Dugan</p>
-                            </div><!-- /.collection-two__content -->
-                        </div><!-- /.collection-two__single -->
-                    </div><!-- /.item -->
-                    <div class="item">
-                        <div class="collection-two__single">
-                            <div class="collection-two__image">
-                                <img src="assets/images/collection/collection-2-5.jpg" alt="">
-                            </div><!-- /.collection-two__image -->
-                            <div class="collection-two__content">
-                                <h3><a href="#">Mercenary Soldiers <br> In Ottoman</a></h3>
-                                <p>Linda M. Dugan</p>
-                            </div><!-- /.collection-two__content -->
-                        </div><!-- /.collection-two__single -->
-                    </div><!-- /.item -->
-
-
-                    <div class="item">
-                        <div class="collection-two__single">
-                            <div class="collection-two__image">
-                                <img src="assets/images/collection/collection-2-1.jpg" alt="">
-                            </div><!-- /.collection-two__image -->
-                            <div class="collection-two__content">
-                                <h3><a href="#">St. Catherine Alexandria <br> in Prison</a></h3>
-                                <p>Linda M. Dugan</p>
-                            </div><!-- /.collection-two__content -->
-                        </div><!-- /.collection-two__single -->
-                    </div><!-- /.item -->
-                    <div class="item">
-                        <div class="collection-two__single">
-                            <div class="collection-two__image">
-                                <img src="assets/images/collection/collection-2-2.jpg" alt="">
-                            </div><!-- /.collection-two__image -->
-                            <div class="collection-two__content">
-                                <h3><a href="#">Alexandria in <br> Prison</a></h3>
-                                <p>Linda M. Dugan</p>
-                            </div><!-- /.collection-two__content -->
-                        </div><!-- /.collection-two__single -->
-                    </div><!-- /.item -->
-                    <div class="item">
-                        <div class="collection-two__single">
-                            <div class="collection-two__image">
-                                <img src="assets/images/collection/collection-2-3.jpg" alt="">
-                            </div><!-- /.collection-two__image -->
-                            <div class="collection-two__content">
-                                <h3><a href="#">Tower of <br> Babel (Babylon)</a></h3>
-                                <p>Linda M. Dugan</p>
-                            </div><!-- /.collection-two__content -->
-                        </div><!-- /.collection-two__single -->
-                    </div><!-- /.item -->
-                    <div class="item">
-                        <div class="collection-two__single">
-                            <div class="collection-two__image">
-                                <img src="assets/images/collection/collection-2-4.jpg" alt="">
-                            </div><!-- /.collection-two__image -->
-                            <div class="collection-two__content">
-                                <h3><a href="#">The Lascaux <br> Cave</a></h3>
-                                <p>Linda M. Dugan</p>
-                            </div><!-- /.collection-two__content -->
-                        </div><!-- /.collection-two__single -->
-                    </div><!-- /.item -->
-                    <div class="item">
-                        <div class="collection-two__single">
-                            <div class="collection-two__image">
-                                <img src="assets/images/collection/collection-2-5.jpg" alt="">
-                            </div><!-- /.collection-two__image -->
-                            <div class="collection-two__content">
-                                <h3><a href="#">Mercenary Soldiers <br> In Ottoman</a></h3>
-                                <p>Linda M. Dugan</p>
-                            </div><!-- /.collection-two__content -->
-                        </div><!-- /.collection-two__single -->
-                    </div><!-- /.item -->
-
-                </div><!-- /.collection-two__carousel shadowed__carousel thm__owl-carousel owl-carousel owl-theme -->
+                {# </div><!-- /.collection-two__carousel shadowed__carousel thm__owl-carousel owl-carousel owl-theme -->
             </div><!-- /.container-fluid -->
-        </section><!-- /.collection-two -->
+        </section><!-- /.collection-two --> #}
 
         <section class="event-two">
-            <img src="assets/images/shapes/event-sculpture-2-1.png" class="event-two__sculpture" alt="">
-            <div class="container">
+{#             <img src="assets/images/shapes/event-sculpture-2-1.png" class="event-two__sculpture" alt="">
+ #}            <div class="container">
                 <div class="block-title-two text-center">
                     <span class="block-title-two__line"></span><!-- /.block-title-two__line -->
                     <p>What’s Going on</p>
@@ -820,116 +573,14 @@
             </div><!-- /.container -->
         </section><!-- /.event-two -->
 
-        <section class="testimonials-one">
-            <div class="container-fluid">
-                <div class="row no-gutters">
-                    <div class="col-lg-6 d-flex">
-                        <div class="my-auto">
-                            <div class="testimonials-one__block">
-                                <div class="block-title">
-                                    <p>Testimonials</p>
-                                    <h3>What Clients Say?</h3>
-                                </div><!-- /.block-title -->
-                                <div class="testimonials-one__carousel owl-carousel thm__owl-carousel owl-theme" data-options='{
-						"items": 1, "loop": true, "margin": 0, "smartSpeed": 700, "autoplayHoverPause": true, "autoplayTimeout": 5000, "autoplay": true, "dots": false, "nav": true }'>
-                                    <div class="item">
-                                        <div class="testimonials-one__single">
-                                            <img src="assets/images/shapes/testi-qoute-1-1.png" alt="">
-                                            <p>Welcome to the World’s Leading Museum of Modern Art. It includes works of art
-                                                created
-                                                during the period stretching.</p>
-                                            <div class="testimonials-one__author">
-                                                <img src="assets/images/resources/testi-1-1.jpg" alt="">
-                                                <h4>Eunice Bailey</h4>
-                                            </div><!-- /.testimonials-one__author -->
-                                        </div><!-- /.testimonials-one__single -->
-                                    </div><!-- /.item -->
-                                    <div class="item">
-                                        <div class="testimonials-one__single">
-                                            <img src="assets/images/shapes/testi-qoute-1-1.png" alt="">
-                                            <p>Welcome to the World’s Leading Museum of Modern Art. It includes works of art
-                                                created
-                                                during the period stretching.</p>
-                                            <div class="testimonials-one__author">
-                                                <img src="assets/images/resources/testi-1-1.jpg" alt="">
-                                                <h4>Eunice Bailey</h4>
-                                            </div><!-- /.testimonials-one__author -->
-                                        </div><!-- /.testimonials-one__single -->
-                                    </div><!-- /.item -->
-                                    <div class="item">
-                                        <div class="testimonials-one__single">
-                                            <img src="assets/images/shapes/testi-qoute-1-1.png" alt="">
-                                            <p>Welcome to the World’s Leading Museum of Modern Art. It includes works of art
-                                                created
-                                                during the period stretching.</p>
-                                            <div class="testimonials-one__author">
-                                                <img src="assets/images/resources/testi-1-1.jpg" alt="">
-                                                <h4>Eunice Bailey</h4>
-                                            </div><!-- /.testimonials-one__author -->
-                                        </div><!-- /.testimonials-one__single -->
-                                    </div><!-- /.item -->
-                                    <div class="item">
-                                        <div class="testimonials-one__single">
-                                            <img src="assets/images/shapes/testi-qoute-1-1.png" alt="">
-                                            <p>Welcome to the World’s Leading Museum of Modern Art. It includes works of art
-                                                created
-                                                during the period stretching.</p>
-                                            <div class="testimonials-one__author">
-                                                <img src="assets/images/resources/testi-1-1.jpg" alt="">
-                                                <h4>Eunice Bailey</h4>
-                                            </div><!-- /.testimonials-one__author -->
-                                        </div><!-- /.testimonials-one__single -->
-                                    </div><!-- /.item -->
-                                    <div class="item">
-                                        <div class="testimonials-one__single">
-                                            <img src="assets/images/shapes/testi-qoute-1-1.png" alt="">
-                                            <p>Welcome to the World’s Leading Museum of Modern Art. It includes works of art
-                                                created
-                                                during the period stretching.</p>
-                                            <div class="testimonials-one__author">
-                                                <img src="assets/images/resources/testi-1-1.jpg" alt="">
-                                                <h4>Eunice Bailey</h4>
-                                            </div><!-- /.testimonials-one__author -->
-                                        </div><!-- /.testimonials-one__single -->
-                                    </div><!-- /.item -->
-
-                                    <div class="item">
-                                        <div class="testimonials-one__single">
-                                            <img src="assets/images/shapes/testi-qoute-1-1.png" alt="">
-                                            <p>Welcome to the World’s Leading Museum of Modern Art. It includes works of art
-                                                created
-                                                during the period stretching.</p>
-                                            <div class="testimonials-one__author">
-                                                <img src="assets/images/resources/testi-1-1.jpg" alt="">
-                                                <h4>Eunice Bailey</h4>
-                                            </div><!-- /.testimonials-one__author -->
-                                        </div><!-- /.testimonials-one__single -->
-                                    </div><!-- /.item -->
-                                </div><!-- /.testimonials-one__carousel owl-carousel thm__owl-carousel owl-theme -->
-                            </div><!-- /.testimonials-one__block -->
-
-                        </div><!-- /.my-auto -->
-                    </div><!-- /.col-lg-6 -->
-                    <div class="col-lg-6">
-                        <div class="testimonials-one__main-image">
-                            <img src="assets/images/resources/testi-block-1-1.jpg" alt="">
-                        </div><!-- /.testimonials-one__main-image -->
-                    </div><!-- /.col-lg-6 -->
-
-                </div><!-- /.row no-gutters -->
-            </div><!-- /.container-fluid -->
-        </section><!-- /.testimonials-one -->
-
         <section class="cta-one" style="background-image: url(assets/images/shapes/cta-bg-1-1.jpg);">
             <div class="container text-center">
-                <h3>More Than 1250 Exhibits!</h3>
+                <h3>Plus que 500 visiteurs sur notre site par jour !</h3>
                 <p>
-                    Every day more exhibits arrive in our museum. Do not <br>
-                    wait and buy a ticket now.
+                    Ne ratez pas l'occasion de devenir un membre entre nous.
                 </p>
                 <div class="cta-one__btn-block">
                     <a href="#" class="thm-btn cta-one__btn-one">Become A Member</a><!-- /.thm-btn cta-one__btn-one -->
-                    <a href="#" class="thm-btn cta-one__btn-two">Buy Online</a><!-- /.thm-btn cta-one__btn-two -->
                 </div>
                 <!-- /.cta-one__btn-block -->
             </div>
@@ -940,11 +591,11 @@
             <div class="container">
                 <div class="blog-one__top">
                     <div class="block-title">
-                        <p>Muzex News</p>
-                        <h3>Latest From Our News</h3>
+                        <p>Artisfera News</p>
+                        <h3>Notre dernieres nouveautés:</h3>
                     </div>
                     <!-- /.block-title -->
-                    <div class="more-post__block">
+                    {# <div class="more-post__block">
                         <a class="more-post__link" href="#">
                             All Post
                             <span class="curved-circle">View More &nbsp;&emsp;View More &nbsp;&emsp;View More View More
@@ -952,7 +603,7 @@
                             </span>
                             <!-- /.curved-circle -->
                         </a>
-                    </div>
+                    </div> #}
                     <!-- /.more-post__block -->
                 </div>
                 <!-- /.blog-one__top -->
@@ -1195,27 +846,28 @@
                     <div class="row">
                         <div class="col-lg-4">
                             <div class="footer-widget footer-widget__about">
-                                <p>Welcome to the World’s Leading Museum of Modern Art. It in- cludes works of art created during the period stretching. from about 1860 to the 1970s.</p>
+                                <p>Bienvenue dans le plus moderne site d'art au monde.</p>
+                                <p>Il comprend des œuvres d'art créées durant la période s'étendant d'environ 1860 aux années 1970.</p>
                             </div><!-- /.footer-widget -->
                         </div><!-- /.col-lg-4 -->
-                        <div class="col-lg-2">
+                        <div class="col-lg-4">
                             <div class="footer-widget footer-widget__links">
                                 <h3 class="footer-widget__title">Quick Link</h3><!-- /.footer-widget__title -->
                                 <ul class="footer-widget__links-list list-unstyled">
                                     <li>
-                                        <a href="#">About Us</a>
+                                        <a href="{{ path('app_base')}}">Accueil</a>
                                     </li>
                                     <li>
-                                        <a href="#">Event</a>
+                                        <a href="#">Evénements</a>
                                     </li>
                                     <li>
-                                        <a href="#">Photo Gallery</a>
+                                        <a href="{{ path('app_peinture_list')}}">Gallerie des peintures</a>
                                     </li>
                                     <li>
-                                        <a href="#">Latest Blog</a>
+                                        <a href="{{ path('app_Musique_list')}}">Nouveautés de la musique</a>
                                     </li>
                                     <li>
-                                        <a href="#">Contact</a>
+                                        <a href="#">Textile</a>
                                     </li>
                                 </ul><!-- /.footer-widget__links-list -->
                             </div><!-- /.footer-widget -->
@@ -1223,28 +875,28 @@
                         <div class="col-lg-3">
                             <div class="footer-widget footer-widget__contact">
                                 <h3 class="footer-widget__title">Contact</h3><!-- /.footer-widget__title -->
-                                <p>Muszex Museums 32 Quincy <br>
-                                    Street Cambridge, MA</p>
-                                <p><a href="tel:(617)-495-9400">(617) 495-9400</a></p>
-                                <p><a href="mailto:example@muzex.com">example@muzex.com</a></p>
+                               <a href="https://www.facebook.com/Artisfera" target="_blank">
+                                    <i class="fab fa-facebook-f"></i> Artisfera</a>
+                                <p><a href="tel:(+216)-22468791">(+216) 22468791</a></p>
+                                <p><a href="mailto:example@muzex.com">Admin@artisfera.com</a></p>
                             </div><!-- /.footer-widget -->
                         </div><!-- /.col-lg-3 -->
-                        <div class="col-lg-3">
+                        {# <div class="col-lg-3">
                             <div class="footer-widget footer-widget__open-hrs">
                                 <h3 class="footer-widget__title">Open Hours</h3><!-- /.footer-widget__title -->
                                 <p>Daily: 9.30 AM–6.00 PM <br>
                                     Sunday & Holidays: Closed</p>
                             </div><!-- /.footer-widget -->
-                        </div><!-- /.col-lg-3 -->
+                        </div><!-- /.col-lg-3 --> #}
                     </div><!-- /.row -->
                 </div><!-- /.container -->
             </div><!-- /.site-footer__upper -->
             <div class="site-footer__bottom">
                 <div class="container">
                     <div class="inner-container">
-                        <p>&copy; Copyright 2020 Muzex. All Rights Reserved</p>
-                        <a href="index.html" class="site-footer__bottom-logo">
-                            <img src="assets/images/logo-footer-1.png" alt="">
+                        <p>&copy; Copyright 2020 Arisfera. All Rights Reserved</p>
+                        <a href="base.html" class="site-footer__bottom-logo">
+                            <img src="assets/images/o.png" alt width="250">
                         </a>
                         <div class="site-footer__bottom-links">
                             <a href="#">Terms & conditions</a>

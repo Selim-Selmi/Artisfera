@@ -3,14 +3,15 @@
 {% block title %}Galerie des Peintures{% endblock %}
 
 {% block body %}
+
 <div class="container mt-5">
     <h1 class="text-center mb-4">🎨 Galerie des Peintures</h1>
 
-    <div class="text-center mb-4">
+   {#  <div class="text-center mb-4">
         <a href="{{ path('app_peinture_new') }}" class="btn btn-success shadow-lg btn-lg rounded-pill">
             ➕ Ajouter une Peinture
         </a>
-    </div>
+    </div> #}
 
     {% if peintures is defined and peintures is not empty %}
     <div id="peintureCarousel" 
@@ -20,7 +21,7 @@
                 <div class="carousel-item {% if loop.first %}active{% endif %}">
                     <div class="d-flex justify-content-center">
                         <div class="card mb-4 shadow p-3 bg-light rounded" style="width: 35rem;">
-                            <img src="{{ asset('uploads/' ~ peinture.tableau) }}" alt="{{ peinture.titre }}" 
+                            <img src="{{ asset('uploads/photosP/' ~ peinture.tableau) }}" alt="{{ peinture.tableau }}" 
                                  class="card-img-top rounded" style="height: 300px; object-fit: contain; background-color: #f8f9fa;">
                             <div class="card-body text-center">
                                 <h3 class="card-title">{{ peinture.titre | upper }}</h3>
@@ -109,7 +110,7 @@
             {% for peinture in peintures %}
                 <div class="col-md-4">
                     <div class="card mb-4 shadow-lg">
-                        <img src="{{ asset('uploads/' ~ peinture.tableau) }}" alt="{{ peinture.titre }}" class="card-img-top" style="height: 300px; object-fit: contain;">
+                        <img src="{{ asset('uploads/photosP/' ~ peinture.tableau) }}" alt="{{ peinture.titre }}" class="card-img-top" style="height: 300px; object-fit: contain;">
                         <div class="card-body text-center">
                             <p class="card-text"><b>Titre :</b> {{ peinture.titre }}</p>
                             <p class="card-text"><b>Date de création :</b> {{ peinture.dateCr | date('d-m-Y') }}</p>

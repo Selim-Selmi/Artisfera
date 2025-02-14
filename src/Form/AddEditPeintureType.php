@@ -38,10 +38,10 @@ class AddEditPeintureType extends AbstractType
                 'class' => Style::class,
                 'choice_label' => 'type_p',
                 'label' => 'Style de peinture',
-            ])
-            ->add('Envoyer', SubmitType::class, [
-                'label' => 'Enregistrer',
             ]);
+           /*  ->add('Envoyer', SubmitType::class, [
+                'label' => 'Enregistrer',
+            ]); */
     }
 
     public function configureOptions(OptionsResolver $resolver): void

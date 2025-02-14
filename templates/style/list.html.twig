@@ -7,9 +7,9 @@
     <h1 class="text-center mb-4">🎨 Galerie des Styles</h1>
 
     <div class="text-center mb-4">
-        <a href="{{ path('app_style_new') }}" class="btn btn-success shadow-lg btn-lg rounded-pill">
+        {# <a href="{{ path('app_style_new') }}" class="btn btn-success shadow-lg btn-lg rounded-pill">
             ➕ Ajouter un Style
-        </a>
+        </a> #}
     </div>
 
     {% if styles is defined and styles is not empty %}
@@ -17,7 +17,7 @@
         {% for style in styles %}
             <div class="col-md-4">
                 <div class="card mb-4 shadow-lg">
-                    <img src="{{ asset('uploads/' ~ style.extab) }}" alt="{{ style.extab }}" class="card-img-top"
+                    <img src="{{ asset('uploads/photosP/' ~ style.extab) }}" alt="{{ style.extab }}" class="card-img-top"
                          style="height: 300px; object-fit: contain; background-color: #f8f9fa;">
                     <div class="card-body text-center">
                         <h5 class="card-title text-uppercase">{{ style.typep }}</h5>

@@ -22,8 +22,7 @@ class AddEditStyleType extends AbstractType
                 'label' => 'Image',
                 'required' => false,
                 'mapped' => false, // Ce champ n'est pas mappé directement à l'entité
-            ])
-            ->add('Enregistrer', SubmitType::class);
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

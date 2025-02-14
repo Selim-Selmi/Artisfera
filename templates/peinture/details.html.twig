@@ -7,7 +7,7 @@
     <div class="card shadow-sm">
         <div class="card-body text-center">
             {% if peinture.tableau %}
-                <img src="{{ asset('uploads/' ~ peinture.tableau) }}" alt="{{ peinture.titre }}" class="img-fluid rounded" style="max-height: 400px;">
+                <img src="{{ asset('uploads/photosP/' ~ peinture.tableau) }}" alt="{{ peinture.titre }}" class="img-fluid rounded" style="max-height: 400px;">
             {% else %}
                 <p class="text-muted">Aucune image disponible</p>
             {% endif %}
