@@ -1,0 +1,105 @@
+{% extends 'basefront.html.twig' %}
+
+{% block title %}Liste des Sponsors{% endblock %}
+
+{% block body %}
+    <section class="sponsor-list">
+        <div class="container">
+            <h2 class="section-title">Nos Sponsors</h2>
+            
+            {% for sponsor in sponsors %}
+                <div class="sponsor-card">
+                    
+                    
+                    <div class="sponsor-info">
+                        <div class="sponsor-logo">
+<img src="{{ asset('uploads/sponsors/' ~ sponsor.logo) }}" 
+     alt="{{ sponsor.nom }}" 
+     class="sponsor-logo">
+                        </div>
+                        <div class="sponsor-details">
+                            <h3>{{ sponsor.nom }}</h3>
+                            <p>Type: {{ sponsor.type }}</p>
+                            <p>Email: <a href="mailto:{{ sponsor.email }}">{{ sponsor.email }}</a></p>
+                            <p>Téléphone: {{ sponsor.telephone }}</p>
+                            {% if sponsor.siteWeb %}
+                                <p><a href="{{ sponsor.siteWeb }}" target="_blank">Visiter le site</a></p>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                                   <!-- 3 Dots Icon for Edit and Delete Popover -->
+    <a href="javascript:void(0);" class="text-dark popover-trigger"
+       tabindex="0"
+       data-bs-toggle="popover"
+       data-bs-trigger="focus"
+       data-bs-html="true"
+       data-bs-placement="right"
+       data-bs-content="
+           <a href='{{ path('app_sponsor_edit', {id: sponsor.id}) }}' class='btn btn-success btn-sm d-block mb-2'>Edit</a>
+           <a href='{{ path('app_sponsor_delete', {id: sponsor.id}) }}' class='btn btn-danger btn-sm d-block'>Delete</a>
+       ">
+        <i class="fas fa-ellipsis-h"></i>
+    </a>  
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
+        var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+            return new bootstrap.Popover(popoverTriggerEl);
+        });
+    });
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var popoverTriggers = document.querySelectorAll('.popover-trigger');
+        popoverTriggers.forEach(trigger => {
+            new bootstrap.Popover(trigger);
+        });
+    });
+</script>
+
+<!-- JavaScript to Handle Form Toggle -->
+<script>
+    function showEditForm(playlistId) {
+        document.getElementById('defaultOptions' + playlistId).style.display = 'none';
+        document.getElementById('editForm' + playlistId).style.display = 'block';
+        document.getElementById('playlistModalLabel' + playlistId).innerText = 'Edit Playlist';
+    }
+
+    function resetModal(playlistId) {
+        document.getElementById('defaultOptions' + playlistId).style.display = 'block';
+        document.getElementById('editForm' + playlistId).style.display = 'none';
+        document.getElementById('playlistModalLabel' + playlistId).innerText = 'Playlist Options';
+    }
+</script>
+<!-- JavaScript to Open Correct Modal --><script>
+    function openEditModal(playlistId) {
+        var modal = document.getElementById('editModal' + playlistId);
+        var bootstrapModal = new bootstrap.Modal(modal);
+        bootstrapModal.show();
+    }
+</script>
+    
+<script>
+    function confirmDelete(playlistId) {
+        var modal = new bootstrap.Modal(document.getElementById('deleteModal' + playlistId));
+        modal.show();
+    }
+
+    </script>
+    <script>
+    // Initialize Bootstrap popovers
+    document.addEventListener("DOMContentLoaded", function() {
+        var popoverTriggers = document.querySelectorAll('.popover-trigger');
+        popoverTriggers.forEach(trigger => {
+            new bootstrap.Popover(trigger);
+        });
+    });
+</script>
+<!-- Bootstrap JS (needed for popovers) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+{% endblock %}

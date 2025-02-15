@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
+        <!-- favicons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('assets/images/favicon/apple-touch-icon.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('assets/images/favicon/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/images/favicon/favicon-16x16.png') }}">
+    <link rel="manifest" href="{{ asset('assets/images/favicon/site.webmanifest') }}">
+
+    <!-- Fonts URL -->
+    <link href="{{ asset('../css?family=Karla:400,700%7CPlayfair+Display:400,500,600,700,800,900%7CWork+Sans:300,400,500,600,700,800,900&display=swap') }}" rel="stylesheet">
+    <!-- Plugins CSS -->
+    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap-datepicker.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap-select.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/fontawesome-all.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/jquery.mCustomScrollbar.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/magnific-popup.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/owl.carousel.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/owl.theme.default.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/animate.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/hover-min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/muzex-icons.css') }}">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/responsive.css') }}">
+
+
+
+         <!-- Template JS -->
+
+    <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
+    <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('assets/js/bootstrap-datepicker.min.js') }}"></script>
+    <script src="{{ asset('assets/js/bootstrap-select.min.js') }}"></script>
+    <script src="{{ asset('assets/js/isotope.js') }}"></script>
+    <script src="{{ asset('assets/js/jquery.ajaxchimp.min.js') }}"></script>
+    <script src="{{ asset('assets/js/jquery.counterup.min.js') }}"></script>
+    <script src="{{ asset('assets/js/jquery.magnific-popup.min.js') }}"></script>
+    <script src="{{ asset('assets/js/jquery.mCustomScrollbar.concat.min.js') }}"></script>
+    <script src="{{ asset('assets/js/jquery.validate.min.js') }}"></script>
+    <script src="{{ asset('assets/js/owl.carousel.min.js') }}"></script>
+    <script src="{{ asset('assets/js/TweenMax.min.js') }}"></script>
+    <script src="{{ asset('assets/js/waypoints.min.js') }}"></script>
+    <script src="{{ asset('assets/js/wow.min.js') }}"></script>
+    <script src="{{ asset('assets/js/jquery.lettering.min.js') }}"></script>
+    <script src="{{ asset('assets/js/jquery.circleType.js') }}"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+    <!-- Custom Scripts -->
+    <script src="{{ asset('assets/js/theme.js') }}"></script>
+    </head>
+    <body>
+{% block styles %}
+    <style>
+        .sponsor-list {
+            padding: 50px 0;
+            background: #f8f8f8;
+        }
+
+        .container {
+            width: 80%;
+            margin: auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 30px;
+        }
+
+        .sponsor-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #fff;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .sponsor-date {
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            color: #9c815e;
+        }
+
+        .sponsor-info {
+            display: flex;
+            align-items: center;
+            flex-grow: 1;
+            margin-left: 20px;
+        }
+
+        .sponsor-logo img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .sponsor-details {
+            margin-left: 15px;
+        }
+
+        .sponsor-details h3 {
+            font-size: 22px;
+            margin-bottom: 5px;
+        }
+
+        .sponsor-action .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            border: 1px solid #000;
+            text-decoration: none;
+            color: #000;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .sponsor-action .btn:hover {
+            background: #9c815e;
+            color: #fff;
+        }
+
+       
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-5px); }
+    100% { transform: translateY(0px); }
+}
+
+.sponsor-logo {
+    animation: float 3s ease-in-out infinite;
+}
+
+.sponsor-logo {
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.sponsor-logo:hover {
+    transform: scale(1.1); /* Zoom de 10% */
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2); /* Augmentation de l'ombre */
+}
+
+    </style>
+{% endblock %}
+
+<head>
+    <nav class="main-nav-one stricky main-nav-one__home-two" style="background-color: #cabcb2; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+            <div class="container">
+                <div class="inner-container">
+                    <div class="logo-box">
+                        <a href="index.html">
+                            <img src="assets/images/logo-1-1.png" alt="" width="143">
+                        </a>
+                        <a href="#" class="side-menu__toggler"><i class="muzex-icon-menu"></i></a>
+                    </div><!-- /.logo-box -->
+                    <div class="main-nav__main-navigation">
+                        <ul class="main-nav__navigation-box">
+                            <li class="">
+                                <a href="index.html">Accueil</a>
+                                
+                            </li>
+                            <li class="dropdown">
+                                <a href="tevent/index.html.twig">Evenement</a>
+                                <ul>
+                                    <li><a href="{{path('app_event_new')}}">Liste des événement</a></li>
+                                    <li><a href="path('app_event_new')">Ajouter un événement</a></li>
+                                    <li><a href="front/sponsor/index.html.twig">Nos sponsors</a></li>
+                                    <li><a href="front/sponsor/new.html.twig">Ajouter un sponsor</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="collection-grid.html">Collections</a>
+                                <ul>
+                                    <li><a href="collection-fullwidth.html">Collections Full</a></li>
+                                    <li><a href="collection-grid.html">Collections Grid</a></li>
+                                    <li><a href="collection-masonary.html">Collections Masonary</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#">Pages</a>
+                                <ul>
+                                    <li class="dropdown">
+                                        <a href="event-1.html">Events</a>
+                                        <ul>
+                                            <li><a href="event-1.html">Events 01</a></li>
+                                            <li><a href="event-2.html">Events 02</a></li>
+                                            <li><a href="event-3.html">Events 03</a></li>
+                                            <li><a href="event-details.html">Events Details</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="about.html">About Us</a></li>
+                                    <li><a href="team.html">Team</a></li>
+                                    <li><a href="donate.html">Donate</a></li>
+                                    <li><a href="venue.html">Veneu</a></li>
+                                    <li><a href="faq.html">FAQ</a></li>
+                                    <li><a href="membership.html">Membership</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="news-standard.html">News</a>
+                                <ul>
+                                    <li><a href="news-standard.html">News Standard</a></li>
+                                    <li><a href="news-grid.html">News Grid</a></li>
+                                    <li><a href="news-masonary.html">News Masonary</a></li>
+                                    <li><a href="news-details.html">News Details</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="contact.html">Contact</a></li>
+                        </ul><!-- /.main-nav__navigation-box -->
+                    </div><!-- /.main-nav__main-navigation -->
+                    <div class="main-nav__right">
+                        <a href="#" class="search-popup__toggler"><i class="muzex-icon-search"></i></a>
+                        <a class="sidemenu-icon side-content__toggler" href="#"><i class="muzex-icon-menu"></i></a>
+                    </div><!-- /.main-nav__right -->
+                </div><!-- /.inner-container -->
+            </div><!-- /.container -->
+        </nav><!-- /.main-nav-one -->
+</head>
+
+        {% block body %}
+
+        {% endblock %}
+
+         {% block footer %}
+ <!-- /.brand-one -->
+        <footer class="site-footer">
+            <div class="site-footer__upper">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="footer-widget footer-widget__about">
+                                <p>Welcome to the World’s Leading Museum of Modern Art. It in- cludes works of art created during the period stretching. from about 1860 to the 1970s.</p>
+                            </div><!-- /.footer-widget -->
+                        </div><!-- /.col-lg-4 -->
+                        <div class="col-lg-2">
+                            <div class="footer-widget footer-widget__links">
+                                <h3 class="footer-widget__title">Quick Link</h3><!-- /.footer-widget__title -->
+                                <ul class="footer-widget__links-list list-unstyled">
+                                    <li>
+                                        <a href="#">About Us</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Event</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Photo Gallery</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Latest Blog</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Contact</a>
+                                    </li>
+                                </ul><!-- /.footer-widget__links-list -->
+                            </div><!-- /.footer-widget -->
+                        </div><!-- /.col-lg-2 -->
+                        <div class="col-lg-3">
+                            <div class="footer-widget footer-widget__contact">
+                                <h3 class="footer-widget__title">Contact</h3><!-- /.footer-widget__title -->
+                                <p>Muszex Museums 32 Quincy <br>
+                                    Street Cambridge, MA</p>
+                                <p><a href="tel:(617)-495-9400">(617) 495-9400</a></p>
+                                <p><a href="mailto:example@muzex.com">example@muzex.com</a></p>
+                            </div><!-- /.footer-widget -->
+                        </div><!-- /.col-lg-3 -->
+                        <div class="col-lg-3">
+                            <div class="footer-widget footer-widget__open-hrs">
+                                <h3 class="footer-widget__title">Open Hours</h3><!-- /.footer-widget__title -->
+                                <p>Daily: 9.30 AM–6.00 PM <br>
+                                    Sunday & Holidays: Closed</p>
+                            </div><!-- /.footer-widget -->
+                        </div><!-- /.col-lg-3 -->
+                    </div><!-- /.row -->
+                </div><!-- /.container -->
+            </div><!-- /.site-footer__upper -->
+            <div class="site-footer__bottom">
+                <div class="container">
+                    <div class="inner-container">
+                        <p>&copy; Copyright 2020 Muzex. All Rights Reserved</p>
+                        <a href="index.html" class="site-footer__bottom-logo">
+                            <img src="assets/images/logo-footer-1.png" alt="">
+                        </a>
+                        <div class="site-footer__bottom-links">
+                            <a href="#">Terms & conditions</a>
+                            <a href="#">Privacy policy & Terms of use</a>
+                        </div><!-- /.site-footer__bottom-links -->
+                    </div><!-- /.inner-container -->
+                </div><!-- /.container -->
+            </div><!-- /.site-footer__bottom -->
+        </footer><!-- /.site-footer -->
+    </div><!-- /.page-wrapper -->
+        {% endblock %}
+    </body>
+</html>

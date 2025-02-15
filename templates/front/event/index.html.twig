@@ -1,0 +1,109 @@
+{% extends 'basefront.html.twig' %}
+
+{% block title %}Liste des evenements{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1 class="text-center">Liste des evenements</h1>
+    
+    <div class="text-center my-4">
+        <a href="{{ path('app_event_new') }}" class="thm-btn donate-one__btn">Ajouter un evenement</a>
+    </div>
+
+    <div class="row justify-content-center">
+        {% if events is defined and events is not empty %}
+            {% for event in events %}
+                <div class="col-md-4">
+                    <div class="card mb-4 shadow-lg">
+                            <a href="{{ path('app_event_show', {id: event.id}) }}">
+                                    <img src="{{ asset('uploads/' ~ event.image) }}" alt="{{ event.titre }}" class="card-img-top" style="height: 300px; object-fit: contain;">
+                            </a>                        <div class="card-body text-center">
+                        <h5 class="fw-bold" style="color: brown;">{{ event.titre }}</h5> 
+                            <p class="card-text"><b>Date  :</b> {{ event.date | date('d-m-Y') }}</p>
+                            <p class="card-text"><b>Heure :</b> {{ event.heure | date('H:i') }}</p>
+                            <p class="card-text"><b>Localisation :</b> {{ event.localisation }}</p>
+
+
+                            <!-- 3 Dots Icon for Edit and Delete Popover -->
+    <a href="javascript:void(0);" class="text-dark popover-trigger"
+       tabindex="0"
+       data-bs-toggle="popover"
+       data-bs-trigger="focus"
+       data-bs-html="true"
+       data-bs-placement="right"
+       data-bs-content="
+           <a href='{{ path('app_event_edit', {id: event.id}) }}' class='btn btn-success btn-sm d-block mb-2'>Edit</a>
+           <a href='{{ path('app_event_delete', {id: event.id}) }}' class='btn btn-danger btn-sm d-block'>Delete</a>
+       ">
+        <i class="fas fa-ellipsis-h"></i>
+    </a>  
+    
+    </div>
+                    </div>
+                </div>
+
+               
+            {% endfor %}
+        {% else %}
+            <p class="text-center mt-4">Aucun événement disponible.</p>
+        {% endif %}
+    </div>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
+        var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+            return new bootstrap.Popover(popoverTriggerEl);
+        });
+    });
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var popoverTriggers = document.querySelectorAll('.popover-trigger');
+        popoverTriggers.forEach(trigger => {
+            new bootstrap.Popover(trigger);
+        });
+    });
+</script>
+
+<!-- JavaScript to Handle Form Toggle -->
+<script>
+    function showEditForm(playlistId) {
+        document.getElementById('defaultOptions' + playlistId).style.display = 'none';
+        document.getElementById('editForm' + playlistId).style.display = 'block';
+        document.getElementById('playlistModalLabel' + playlistId).innerText = 'Edit Playlist';
+    }
+
+    function resetModal(playlistId) {
+        document.getElementById('defaultOptions' + playlistId).style.display = 'block';
+        document.getElementById('editForm' + playlistId).style.display = 'none';
+        document.getElementById('playlistModalLabel' + playlistId).innerText = 'Playlist Options';
+    }
+</script>
+<!-- JavaScript to Open Correct Modal --><script>
+    function openEditModal(playlistId) {
+        var modal = document.getElementById('editModal' + playlistId);
+        var bootstrapModal = new bootstrap.Modal(modal);
+        bootstrapModal.show();
+    }
+</script>
+    
+<script>
+    function confirmDelete(playlistId) {
+        var modal = new bootstrap.Modal(document.getElementById('deleteModal' + playlistId));
+        modal.show();
+    }
+
+    </script>
+    <script>
+    // Initialize Bootstrap popovers
+    document.addEventListener("DOMContentLoaded", function() {
+        var popoverTriggers = document.querySelectorAll('.popover-trigger');
+        popoverTriggers.forEach(trigger => {
+            new bootstrap.Popover(trigger);
+        });
+    });
+</script>
+<!-- Bootstrap JS (needed for popovers) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+{% endblock %}
