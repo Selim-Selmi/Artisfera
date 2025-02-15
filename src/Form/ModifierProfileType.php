@@ -38,9 +38,8 @@ class ModifierProfileType extends AbstractType
                     'Textile' => 'ROLE_TEXTILE',
                     'Céramique' => 'ROLE_CERAMIQUE',
                 ],
-                'expanded' => true, 
-                'multiple' => false, 
-                'mapped' => false, 
+                'multiple' => true,
+                'expanded' => true,
             ])
 
             ->add('agreeTerms', CheckboxType::class, [

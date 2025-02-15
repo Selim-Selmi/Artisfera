@@ -50,9 +50,9 @@ class SecurityController extends AbstractController
             } elseif (in_array('ROLE_MEMBRE', $roles)) {
                 return $this->redirectToRoute('app_membre');
             } elseif (in_array('ROLE_MUSIQUE', $roles)) {
-                return $this->redirectToRoute('app_musique');
+                return $this->redirectToRoute('app_Musique_list');
             } elseif (in_array('ROLE_PEINTURE', $roles)) {
-                return $this->redirectToRoute('app_peinture');
+                return $this->redirectToRoute('app_peinture_list');
             } elseif (in_array('ROLE_TEXTILE', $roles)) {
                 return $this->redirectToRoute('app_textile');
             } elseif (in_array('ROLE_CERAMIQUE', $roles)) {

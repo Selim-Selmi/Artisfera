@@ -83,7 +83,6 @@
         </a>
       </li><!-- End Dashboard Nav -->
 
- 
 
       <li class="nav-item">
         <a class="nav-link " data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
@@ -101,7 +100,7 @@
             </a>
           </li>
           <li>
-            <a href="tables-general.html">
+            <a href="{{ path('app_peinture_list_back') }}">
               <i class="bi bi-circle"></i><span>Liste des Peintures</span>
             </a>
           </li>
@@ -122,6 +121,12 @@
           </li>
         </ul>
       </li><!-- End Tables Nav -->
+                  <li class="nav-item">
+        <a class="nav-link collapsed" href="{{ path('app_user_new') }}">
+          <i class="bi bi-grid"></i>
+          <span>Ajouter Un Utilisateur</span>
+        </a>
+      </li>
 
 
 
@@ -159,6 +164,9 @@
                     <th scope="col">Prénom</th>
                     <th scope="col">Genre</th>
                     <th scope="col">Email</th>
+                    <th scope="col">Rôles</th>
+                    <th scope="col">Actions</th>
+
                 </tr>
             </thead>
             <tbody>
@@ -167,8 +175,17 @@
                     <td>{{ user.nom }}</td>
                     <td>{{ user.prenom }}</td>
                     <td>{{ user.genre }}</td>
-                    <td>{{ user.email }}</td>
-                </tr>
+                    <td>{{ user.email }}</td>        
+                    <td>
+                        {% for role in user.roles %}
+                            {{ role|replace({'ROLE_USER' : ''}) }}  
+                        {% endfor %}
+                    </td>
+                    <td>
+                      <a href="{{ path('app_user_edit', {'id': user.id}) }}" class="btn btn-warning btn-sm">Modifier</a>
+                      <a href="{{ path('app_user_remove', {'id': user.id}) }}" class="btn btn-danger btn-sm" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?');">Supprimer</a>
+                    </td>
+                    </tr>
                 {% endfor %}
             </tbody>
         </table>

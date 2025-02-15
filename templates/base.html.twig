@@ -1,17 +1,316 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
-        {% block stylesheets %}
-        {% endblock %}
+<html lang="en" dir="ltr">
 
-        {% block javascripts %}
-            {% block importmap %}{{ importmap('app') }}{% endblock %}
-        {% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-    </body>
+<style>
+   .carousel-control-prev, .carousel-control-next {
+    background-color: green; /* Fond vert complet */
+    width: 8%; /* Ajuste la taille du bouton */
+    opacity: 1; /* Assure que le fond est bien visible */
+    border-radius: 5px; /* Arrondi léger */
+}
+
+.carousel-control-prev:hover, .carousel-control-next:hover {
+    background-color: darkgreen; /* Assombrit au survol */
+}
+
+.exhibition-two {
+    padding: 60px 0;
+    background-color: #f8f8f8;
+}
+
+.exhibition-two__single {
+    border-radius: 10px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.exhibition-two__single:hover {
+    transform: translateY(-5px);
+}
+
+.exhibition-two__image {
+    width: 100%;
+    height: 250px; /* Fixe une hauteur uniforme pour toutes les images */
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.exhibition-two__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Empêche la déformation des images */
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.exhibition-two__content {
+    padding: 15px;
+    text-align: center;
+}
+
+.exhibition-two__content h3 {
+    font-size: 20px;
+    margin-bottom: 5px;
+}
+
+.exhibition-two__content span {
+    display: block;
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.exhibition-two__content p {
+    font-size: 16px;
+    color: #333;
+}
+
+.exhibition-two__link {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 8px 15px;
+    border-radius: 5px;
+    background: #ff5a5f;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background 0.3s ease;
+}
+
+.exhibition-two__link:hover {
+    background: #e0484e;
+}
+
+
+</style>
+<head>{% block head %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artisfera</title>
+
+    <!-- favicons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="{{asset('assets/images/favicon/apple-touch-icon.png')}}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{asset('assets/images/favicon/favicon-32x32.png')}}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{asset('assets/images/favicon/favicon-16x16.png')}}">
+    <link rel="manifest" href="{{asset('assets/images/favicon/site.webmanifest')}}">
+
+    <!-- Fonts URL -->
+    <link href="../css?family=Karla:400,700%7CPlayfair+Display:400,500,600,700,800,900%7CWork+Sans:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+
+{% block css%}
+    <!-- Plugins CSS -->
+    <link rel="stylesheet" href="{{asset('assets/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/bootstrap-datepicker.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/bootstrap-select.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/fontawesome-all.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/jquery.mCustomScrollbar.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/magnific-popup.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/owl.carousel.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/owl.theme.default.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/animate.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/hover-min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/muzex-icons.css')}}">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/responsive.css')}}">
+    {% endblock %} 
+    {% endblock %} 
+
+</head>
+
+{#     <div class="preloader">
+        <div class="lds-ripple">
+            <div></div>
+            <div></div>
+        </div>
+    </div> #}<!-- /.preloader -->
+    <div class="page-wrapper">
+        <div class="topbar-one topbar-one__home-two">
+            <div class="container">
+                <div class="topbar-one__left">
+                    <p>Bienvenue à notre site et bonne navigation !!</p>
+                </div><!-- /.topbar-one__left -->
+                <div class="topbar-one__right">
+{#                     <a href="#"><i class="far fa-clock"></i> Mon - Sat 9.00 - 18.00</a>
+ #}                    <a href="#"><i class=""></i> (+216) 22 468 791</a>
+                        <a href="{{path('app_profile')}}">Profile</a>
+                        <a href="{{path('app_logout')}}">Deconnection</a>
+
+                   {#  <a href="#" class="thm-btn topbar__btn">Buy Tickets</a><!-- /.thm-btn --> #}
+                </div><!-- /.topbar-one__right -->
+            </div><!-- /.container -->
+        </div><!-- /.topbar-one -->
+
+<!-- /.main-nav-one -->
+        <!-- banner section -->
+        
+<body>
+{% block body %}
+<nav class="main-nav-one stricky main-nav-one__home-two">
+            <div class="container">
+                <div class="inner-container">
+                    <div class="logo-box">
+                        <a href={{path('app_login')}}>
+                            <img src="assets/images/o.png" alt width="143">
+                        </a>
+                        <a href="#" class="side-menu__toggler"><i class="muzex-icon-menu"></i></a>
+                    </div><!-- /.logo-box -->
+                    <div class="main-nav__main-navigation">
+                        <ul class="main-nav__navigation-box">
+                        <li><a href={{path('app_login')}}>Accueil</a></li>
+                            <li class="dropdown">
+                                <a href="#">Peinture</a>
+                                <ul>
+                                    <li><a href={{ path('app_peinture_afficher')}}> des peinture</a></li>
+                                    <li><a href={{ path('app_style_list')}}>Liste des styles</a></li>
+                                   {#  <li class="dropdown">
+                                        <a href="#">Header Styles</a>
+                                        <ul>
+                                            <li><a href="index.html">Header 01</a></li>
+                                            <li><a href="index-2.html">Header 02</a></li>
+                                            <li><a href="index-3.html">Header 03</a></li>
+                                        </ul>
+                                    </li> #}
+                                </ul>
+                            </li>
+                            <li><a href="{{ path('app_Musique_list')}}">Musique</a></li>
+                            <li class="dropdown">
+                                <a href="#">Evénements</a>
+                                <ul>
+                                    <li><a href="collection-fullwidth.html">Collections Full</a></li>
+                                    <li><a href="collection-grid.html">Collections Grid</a></li>
+                                    <li><a href="collection-masonary.html">Collections Masonary</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#">Textile</a>
+                                <ul>
+                                    <li><a href="about.html">About Us</a></li>
+                                    <li><a href="team.html">Team</a></li>
+                                    <li><a href="donate.html">Donate</a></li>
+                                    <li><a href="venue.html">Veneu</a></li>
+                                    <li><a href="faq.html">FAQ</a></li>
+                                    <li><a href="membership.html">Membership</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#">Céramique</a>
+                                <ul>
+                                    <li><a href="news-standard.html">News Standard</a></li>
+                                    <li><a href="news-grid.html">News Grid</a></li>
+                                    <li><a href="news-masonary.html">News Masonary</a></li>
+                                    <li><a href="news-details.html">News Details</a></li>
+                                </ul>
+                            </li>
+                        </ul><!-- /.main-nav__navigation-box -->
+                    </div><!-- /.main-nav__main-navigation -->
+                   {#  <div class="main-nav__right">
+                        <a href="#" class="search-popup__toggler"><i class="muzex-icon-search"></i></a>
+                        <a class="sidemenu-icon side-content__toggler" href="#"><i class="muzex-icon-menu"></i></a>
+                    </div><!-- /.main-nav__right --> #}
+                </div><!-- /.inner-container -->
+            </div><!-- /.container -->
+        </nav>
+
+    {% block js %} 
+    <!-- Template JS -->
+
+    <script src="{{asset('assets/js/jquery.min.js')}}"></script>
+    <script src="{{asset('assets/js/bootstrap.bundle.min.js')}}"></script>
+    <script src="{{asset('assets/js/bootstrap-datepicker.min.js')}}"></script>
+    <script src="{{asset('assets/js/bootstrap-select.min.js')}}"></script>
+    <script src="{{asset('assets/js/isotope.js')}}"></script>
+    <script src="{{asset('assets/js/jquery.ajaxchimp.min.js')}}"></script>
+    <script src="{{asset('assets/js/jquery.counterup.min.js')}}"></script>
+    <script src="{{asset('assets/js/jquery.magnific-popup.min.js')}}"></script>
+    <script src="{{asset('assets/js/jquery.mCustomScrollbar.concat.min.js')}}"></script>
+    <script src="{{asset('assets/js/jquery.validate.min.js')}}"></script>
+    <script src="{{asset('assets/js/owl.carousel.min.js')}}"></script>
+    <script src="{{asset('assets/js/TweenMax.min.js')}}"></script>
+    <script src="{{asset('assets/js/waypoints.min.js')}}"></script>
+    <script src="{{asset('assets/js/wow.min.js')}}"></script>
+    <script src="{{asset('assets/js/jquery.lettering.min.js')}}"></script>
+    <script src="{{asset('assets/js/jquery.circleType.js')}}"></script>
+
+
+    <!-- Custom Scripts -->
+    <script src="{{asset('assets/js/theme.js')}}"></script>
+    {% endblock %} 
+    {% endblock %} 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+<footer class="site-footer">{% block footer %} 
+            <div class="site-footer__upper">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="footer-widget footer-widget__about">
+                                <p>Bienvenue dans le plus moderne site d'art au monde.</p>
+                                <p>Il comprend des œuvres d'art créées durant la période s'étendant d'environ 1860 aux années 1970.</p>
+                            </div><!-- /.footer-widget -->
+                        </div><!-- /.col-lg-4 -->
+                        <div class="col-lg-4">
+                            <div class="footer-widget footer-widget__links">
+                                <h3 class="footer-widget__title">Quick Link</h3><!-- /.footer-widget__title -->
+                                <ul class="footer-widget__links-list list-unstyled">
+                                    <li>
+                                        <a href="{{ path('app_login')}}">Accueil</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Evénements</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ path('app_peinture_afficher')}}">Gallerie des peintures</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ path('app_Musique_list')}}">Nouveautés de la musique</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Textile</a>
+                                    </li>
+                                </ul><!-- /.footer-widget__links-list -->
+                            </div><!-- /.footer-widget -->
+                        </div><!-- /.col-lg-2 -->
+                        <div class="col-lg-3">
+                            <div class="footer-widget footer-widget__contact">
+                                <h3 class="footer-widget__title">Contact</h3><!-- /.footer-widget__title -->
+                               <a href="https://www.facebook.com/Artisfera" target="_blank">
+                                    <i class="fab fa-facebook-f"></i> Artisfera</a>
+                                <p><a href="tel:(+216)-22468791">(+216) 22468791</a></p>
+                                <p><a href="mailto:example@muzex.com">Admin@artisfera.com</a></p>
+                            </div><!-- /.footer-widget -->
+                        </div><!-- /.col-lg-3 -->
+                        {# <div class="col-lg-3">
+                            <div class="footer-widget footer-widget__open-hrs">
+                                <h3 class="footer-widget__title">Open Hours</h3><!-- /.footer-widget__title -->
+                                <p>Daily: 9.30 AM–6.00 PM <br>
+                                    Sunday & Holidays: Closed</p>
+                            </div><!-- /.footer-widget -->
+                        </div><!-- /.col-lg-3 --> #}
+                    </div><!-- /.row -->
+                </div><!-- /.container -->
+            </div><!-- /.site-footer__upper -->
+            <div class="site-footer__bottom">
+                <div class="container">
+                    <div class="inner-container">
+                        <p>&copy; Copyright 2020 Arisfera. All Rights Reserved</p>
+                        <a href="base.html" class="site-footer__bottom-logo">
+                            <img src="assets/images/o.png" alt width="250">
+                        </a>
+                        <div class="site-footer__bottom-links">
+                            <a href="#">Terms & conditions</a>
+                            <a href="#">Privacy policy & Terms of use</a>
+                        </div><!-- /.site-footer__bottom-links -->
+                    </div><!-- /.inner-container -->
+                </div><!-- /.container -->
+            </div><!-- /.site-footer__bottom -->
+        {% endblock %} </footer>
+
 </html>

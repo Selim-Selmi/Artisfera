@@ -1,0 +1,92 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}🎭 Galerie des Styles{% endblock %}
+
+{% block body %}
+<nav class="main-nav-one stricky main-nav-one__home-two">
+            <div class="container">
+                <div class="inner-container">
+                    <div class="logo-box">
+                        <a href={{path('app_base')}}>
+                            <img src="assets/images/o.png" alt width="143">
+                        </a>
+                        <a href="#" class="side-menu__toggler"><i class="muzex-icon-menu"></i></a>
+                    </div><!-- /.logo-box -->
+                    <div class="main-nav__main-navigation">
+                        <ul class="main-nav__navigation-box">
+                            <li class="dropdown">
+                                <a href="#">Gestion Peinture</a>
+                                <ul>
+                                    <li><a href={{ path('app_peinture_new')}}> Ajouter les peinture</a></li>
+                                    <li><a href={{ path('app_peinture_list')}}>Liste des peinture</a></li>
+                                    <li><a href={{ path('app_style_new')}}>Ajouter les style</a></li>
+                                    <li><a href={{ path('app_style_list')}}>Liste des styles</a></li>
+                                </ul>
+                            </li>
+                          
+                        </ul><!-- /.main-nav__navigation-box -->
+                    </div><!-- /.main-nav__main-navigation -->
+                   {#  <div class="main-nav__right">
+                        <a href="#" class="search-popup__toggler"><i class="muzex-icon-search"></i></a>
+                        <a class="sidemenu-icon side-content__toggler" href="#"><i class="muzex-icon-menu"></i></a>
+                    </div><!-- /.main-nav__right --> #}
+                </div><!-- /.inner-container -->
+            </div><!-- /.container -->
+        </nav><div class="container mt-5">
+    <h1 class="text-center mb-4">🎨 Galerie des Styles</h1>
+
+    <div class="text-center mb-4">
+        {# <a href="{{ path('app_style_new') }}" class="btn btn-success shadow-lg btn-lg rounded-pill">
+            ➕ Ajouter un Style
+        </a> #}
+    </div>
+
+    {% if styles is defined and styles is not empty %}
+    <div class="row justify-content-center">
+        {% for style in styles %}
+            <div class="col-md-4">
+                <div class="card mb-4 shadow-lg">
+                    <img src="{{ asset('uploads/photosP/' ~ style.extab) }}" alt="{{ style.extab }}" class="card-img-top"
+                         style="height: 300px; object-fit: contain; background-color: #f8f9fa;">
+                    <div class="card-body text-center">
+                        <h5 class="card-title text-uppercase">{{ style.typep }}</h5>
+                        <p class="card-text">{{ style.description }}</p>
+                      
+                            <a href="{{ path('app_style_edit', {id: style.id}) }}" class="btn btn-warning btn-lg shadow-sm rounded-pill mb-2">
+                                ✏ Modifier
+                            </a>
+                            <a href="{{ path('app_style_remove', {id: style.id}) }}" class="btn btn-danger btn-lg shadow-sm rounded-pill mb-2">
+                                🗑 Supprimer
+                            </a>
+                            <a href="{{ path('app_style_details', {id: style.id}) }}" class="btn btn-primary btn-lg shadow-sm rounded-pill mb-2">
+                                📜 Détails
+                            </a>
+                        </div>
+                    
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    {% else %}
+        <p class="text-center mt-4">Aucun style disponible.</p>
+    {% endif %}
+</div>
+
+<!-- Styles personnalisés -->
+<style>
+    .btn {
+        font-size: 1rem;
+        font-weight: 600;
+        transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    }
+
+    .btn:hover {
+        transform: scale(1.08);
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .d-flex.flex-wrap {
+        gap: 4.5px;
+    }
+</style>
+{% endblock %}

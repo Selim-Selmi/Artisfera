@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails de la Style{% endblock %}
+
+{% block body %}
+<nav class="main-nav-one stricky main-nav-one__home-two">
+            <div class="container">
+                <div class="inner-container">
+                    <div class="logo-box">
+                        <a href={{path('app_base')}}>
+                            <img src="assets/images/o.png" alt width="143">
+                        </a>
+                        <a href="#" class="side-menu__toggler"><i class="muzex-icon-menu"></i></a>
+                    </div><!-- /.logo-box -->
+                    <div class="main-nav__main-navigation">
+                        <ul class="main-nav__navigation-box">
+                            <li class="dropdown">
+                                <a href="#">Gestion Peinture</a>
+                                <ul>
+                                    <li><a href={{ path('app_peinture_new')}}> Ajouter les peinture</a></li>
+                                    <li><a href={{ path('app_peinture_list')}}>Liste des peinture</a></li>
+                                    <li><a href={{ path('app_style_new')}}>Ajouter les style</a></li>
+                                    <li><a href={{ path('app_style_list')}}>Liste des styles</a></li>
+                                </ul>
+                            </li>
+                          
+                        </ul><!-- /.main-nav__navigation-box -->
+                    </div><!-- /.main-nav__main-navigation -->
+                   {#  <div class="main-nav__right">
+                        <a href="#" class="search-popup__toggler"><i class="muzex-icon-search"></i></a>
+                        <a class="sidemenu-icon side-content__toggler" href="#"><i class="muzex-icon-menu"></i></a>
+                    </div><!-- /.main-nav__right --> #}
+                </div><!-- /.inner-container -->
+            </div><!-- /.container -->
+        </nav>
+<div class="container mt-4">
+    <div class="card shadow-sm">
+        <div class="card-body text-center">
+            {% if style.extab %}
+                <img src="{{ asset('uploads/photosP/' ~ style.extab) }}" alt="{{ style.extab }}" class="img-fluid rounded" style="max-height: 400px;">
+            {% else %}
+                <p class="text-muted">Aucune image disponible</p>
+            {% endif %}
+            <h2 class="mt-3">{{ style.typep | upper }}</h2>
+            <p class="card-text"><b>Description de ce type :</b>{{ style.description }}</p>
+            <p class="card-text"><b>Nombre de tableau posés de ce type : </b>{{ style.peintures | length }}</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

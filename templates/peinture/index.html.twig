@@ -1,0 +1,165 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Galerie des Peintures{% endblock %}
+
+{% block body %}
+<nav class="main-nav-one stricky main-nav-one__home-two">
+            <div class="container">
+                <div class="inner-container">
+                    <div class="logo-box">
+                        <a href={{path('app_base')}}>
+                            <img src="assets/images/o.png" alt width="143">
+                        </a>
+                        <a href="#" class="side-menu__toggler"><i class="muzex-icon-menu"></i></a>
+                    </div><!-- /.logo-box -->
+                    <div class="main-nav__main-navigation">
+                        <ul class="main-nav__navigation-box">
+                            <li class="dropdown">
+                               <a href="#">Gestion Peinture</a>
+                                <ul>
+                                    <li><a href={{ path('app_peinture_new')}}> Ajouter les peinture</a></li>
+                                    <li><a href={{ path('app_peinture_list')}}>Liste des peinture</a></li>
+                                    <li><a href={{ path('app_style_new')}}>Ajouter les style</a></li>
+                                    <li><a href={{ path('app_style')}}>Liste des styles</a></li>
+                                </ul>
+                            </li>
+                          
+                        </ul><!-- /.main-nav__navigation-box -->
+                    </div><!-- /.main-nav__main-navigation -->
+                   {#  <div class="main-nav__right">
+                        <a href="#" class="search-popup__toggler"><i class="muzex-icon-search"></i></a>
+                        <a class="sidemenu-icon side-content__toggler" href="#"><i class="muzex-icon-menu"></i></a>
+                    </div><!-- /.main-nav__right --> #}
+                </div><!-- /.inner-container -->
+            </div><!-- /.container -->
+        </nav>
+<div class="container mt-5">
+    <h1 class="text-center mb-4">🎨 Galerie des Peintures</h1>
+
+   {#  <div class="text-center mb-4">
+        <a href="{{ path('app_peinture_new') }}" class="btn btn-success shadow-lg btn-lg rounded-pill">
+            ➕ Ajouter une Peinture
+        </a>
+    </div> #}
+
+    {% if peintures is defined and peintures is not empty %}
+    <div id="peintureCarousel" 
+         data-bs-ride="carousel" style="max-width: 900px; margin: auto;">
+        <div class="carousel-inner">
+            {% for peinture in peintures %}
+                <div class="carousel-item {% if loop.first %}active{% endif %}">
+                    <div class="d-flex justify-content-center">
+                        <div class="card mb-4 shadow p-3 bg-light rounded" style="width: 35rem;">
+                            <img src="{{ asset('uploads/photosP/' ~ peinture.tableau) }}" alt="{{ peinture.tableau }}" 
+                                 class="card-img-top rounded" style="height: 300px; object-fit: contain; background-color: #f8f9fa;">
+                            <div class="card-body text-center">
+                                <h3 class="card-title">{{ peinture.titre | upper }}</h3>
+                               {#  <p class="card-text">
+                                    <b>Date de création :</b> {{ peinture.dateCr | date('d-m-Y') }} <br>
+                                    <b>Type :</b> {{ peinture.type.typep }}
+                                </p> #}
+                                {# <div class="d-flex justify-content-center gap-4 mt-4">
+                                    <a href="{{ path('app_peinture_edit', {id: peinture.id}) }}" class="btn btn-warning btn-lg shadow-sm rounded-pill">
+                                        ✏ Modifier
+                                    </a>
+                                    <a href="{{ path('app_peinture_remove', {id: peinture.id}) }}" class="btn btn-danger btn-lg shadow-sm rounded-pill">
+                                        🗑 Supprimer
+                                    </a>
+                                    <a href="{{ path('app_peinture_details', {id: peinture.id}) }}" class="btn btn-primary btn-lg shadow-sm rounded-pill">
+                                        📜 Détails
+                                    </a>
+                                </div> #}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Boutons de navigation modernisés -->
+        {# <button class="carousel-control-prev" type="button" data-bs-target="#peintureCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#peintureCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </button> #}
+    </div>
+    {% else %}
+        <p class="text-center mt-4">Aucune peinture disponible.</p>
+    {% endif %}
+</div>
+
+<!-- Styles personnalisés -->
+<style>
+    .carousel-control-prev-icon, .carousel-control-next-icon {
+        background-color: green;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+    }
+
+    .carousel-control-prev, .carousel-control-next {
+        width: 5%;
+    }
+
+    .btn {
+        font-size: 1rem;
+        font-weight: 600;
+        transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    }
+
+    .btn:hover {
+        transform: scale(1.08);
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .carousel {
+        background-color: #f9f9f9; /* Légèrement gris clair */
+        padding: 20px;
+        border-radius: 15px;
+    }
+</style>
+
+<!-- Script pour activer le carrousel immédiatement -->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        new bootstrap.Carousel(document.getElementById('peintureCarousel'), {
+            interval: 2500,
+            pause: false, 
+            wrap: true
+        });
+    });
+</script>
+
+<div class="container mt-5"> 
+
+
+    <div class="row justify-content-center">
+        {% if peintures is defined and peintures is not empty %}
+            {% for peinture in peintures %}
+                <div class="col-md-4">
+                    <div class="card mb-4 shadow-lg">
+                        <img src="{{ asset('uploads/photosP/' ~ peinture.tableau) }}" alt="{{ peinture.titre }}" class="card-img-top" style="height: 300px; object-fit: contain;">
+                        <div class="card-body text-center">
+                            <p class="card-text"><b>Titre :</b> {{ peinture.titre }}</p>
+                            <p class="card-text"><b>Date de création :</b> {{ peinture.dateCr | date('d-m-Y') }}</p>
+                            <p class="card-text"><b>Type :</b> {{ peinture.type.typep }}</p>
+                            <a href="{{ path('app_peinture_edit', {id: peinture.id}) }}" class="btn btn-warning btn-lg shadow-sm rounded-pill mb-2">
+                                        ✏ Modifier
+                                    </a>
+                                    <a href="{{ path('app_peinture_remove', {id: peinture.id}) }}" class="btn btn-danger btn-lg shadow-sm rounded-pill mb-2">
+                                        🗑 Supprimer
+                                    </a>
+                            <a href="{{ path('app_peinture_details', {id: peinture.id}) }}" class="btn btn-primary btn-lg shadow-sm rounded-pill"> 📜 Détails</a>   
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="text-center mt-4">Aucune peinture disponible.</p>
+        {% endif %}
+    </div>
+</div>
+
+
+{% endblock %}
