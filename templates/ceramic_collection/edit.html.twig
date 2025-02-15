@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit CeramicCollection{% endblock %}
+
+{% block body %}
+    <h1>Edit CeramicCollection</h1>
+
+    {{ include('ceramic_collection/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_ceramic_collection_index') }}">back to list</a>
+
+    {{ include('ceramic_collection/_delete_form.html.twig') }}
+{% endblock %}

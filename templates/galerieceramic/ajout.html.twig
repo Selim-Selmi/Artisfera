@@ -1,0 +1,81 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container d-flex justify-content-center align-items-center vh-100">
+    <div class="card shadow-lg p-4" style="width: 50rem; border-radius: 10px;">
+        
+        <!-- Titre du formulaire -->
+        <h2 class="text-center mb-4 fw-bold">Ajouter Œuvre</h2>
+
+        {{ form_start(form, {'attr': {'enctype': 'multipart/form-data'}}) }}
+
+        <!-- Formulaire en deux colonnes -->
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mb-3">
+                    {{ form_label(form.nom, 'Nom de l\'œuvre', {'label_attr': {'class': 'form-label fw-bold'}}) }}
+                    {{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.nom) }}
+                </div>
+                <div class="mb-3">
+                    {{ form_label(form.type, 'Type', {'label_attr': {'class': 'form-label fw-bold'}}) }}
+                    {{ form_widget(form.type, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.type) }}
+                </div>
+                <div class="mb-3">
+                    {{ form_label(form.matiere, 'Matière', {'label_attr': {'class': 'form-label fw-bold'}}) }}
+                    {{ form_widget(form.matiere, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.matiere) }}
+                </div>
+                <div class="mb-3">
+                    {{ form_label(form.dimensions, 'Dimensions', {'label_attr': {'class': 'form-label fw-bold'}}) }}
+                    {{ form_widget(form.dimensions, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.dimensions) }}
+                </div>
+                <div class="mb-3">
+                    {{ form_label(form.categorie, 'Catégorie', {'label_attr': {'class': 'form-label fw-bold'}}) }}
+                    {{ form_widget(form.categorie, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.categorie) }}
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="mb-3">
+                    {{ form_label(form.image, 'Image', {'label_attr': {'class': 'form-label fw-bold'}}) }}
+                    {{ form_widget(form.image, {'attr': {'class': 'form-control', 'type': 'file'}}) }}
+                    {{ form_errors(form.image) }}
+                </div>
+                <div class="mb-3">
+                    {{ form_label(form.description, 'Description', {'label_attr': {'class': 'form-label fw-bold'}}) }}
+                    {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.description) }}
+                </div>
+                <div class="mb-3">
+                    {{ form_label(form.couleur, 'Couleur', {'label_attr': {'class': 'form-label fw-bold'}}) }}
+                    {{ form_widget(form.couleur, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.couleur) }}
+                </div>
+                <div class="mb-3">
+                    {{ form_label(form.createur, 'Créateur', {'label_attr': {'class': 'form-label fw-bold'}}) }}
+                    {{ form_widget(form.createur, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.createur) }}
+                </div>
+
+                <div class="mb-3">
+                    {{ form_label(form.ceramicCollection, 'Collection', {'label_attr': {'class': 'form-label fw-bold'}}) }}
+                    {{ form_widget(form.ceramicCollection, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.ceramicCollection) }}
+                </div>
+            </div>
+        </div>
+
+        <!-- Boutons en bas bien alignés -->
+        <div class="d-flex justify-content-end mt-4">
+            <a href="{{ path('app_galerieceramic') }}" class="btn btn-secondary me-2">Annuler</a>
+            <button type="submit" class="btn btn-success">Ajouter</button>
+        </div>
+
+        {{ form_end(form) }}
+    </div>
+</div>
+{% endblock %}
