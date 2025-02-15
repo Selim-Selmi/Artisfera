@@ -1,0 +1,206 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}CollectionT{% endblock %}
+
+{% block body %}
+ <style>
+   
+        /* General body styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color:rgb(255, 255, 255);
+            color: #333;
+            padding: 20px;
+        }
+
+        /* Form styling */
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: start;
+            gap: 8px;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px #9a8478;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            color: #555;
+        }
+
+        select {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        select:hover {
+            border-color: #9a8478;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: #9a8478;
+            box-shadow: 0 0 8px #9a8478;
+        }
+
+        /* Table styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #9a8478;
+            color: #ffffff;
+            font-weight: bold;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        /* Image styling */
+        img {
+            width: 100px;
+            height: auto;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        /* Button styling */
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #ffffff;
+            background-color: #9a8478;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #9a8478;
+        }
+
+        .btn-primary {
+            background-color: #9a8478;
+        }
+
+        .btn-primary:hover {
+            background-color: #9a8478;
+        }
+
+        /* No records message */
+        .text-center {
+            text-align: center;
+            color: #777;
+            font-style: italic;
+        }
+
+        /* Actions links */
+        a {
+            color: #9a8478;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: #9a8478;
+        }
+
+        /* Style général de la liste déroulante */
+#collectionFilter {
+    padding: 10px;
+    border: 2px solid #1e130c;
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: #ffffff;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 200px; /* Ajuste la largeur selon tes besoins */
+}
+
+/* Effet au survol */
+#collectionFilter:hover {
+    border-color: #8b5e34;
+}
+
+/* Effet au focus (quand on clique dessus) */
+#collectionFilter:focus {
+    outline: none;
+    border-color: #8b5e34;
+    box-shadow: 0 0 8px rgba(139, 94, 52, 0.5);
+}
+
+/* Style des options */
+#collectionFilter option {
+    padding: 10px;
+    background-color: #ffffff;
+    color: #333;
+}
+
+/* Style des options au survol */
+#collectionFilter option:hover {
+    background-color: #8b5e34;
+    color: white;
+}
+
+    </style>
+    <h1>CollectionT</h1>
+
+    <table class="table">
+    <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+ <tbody>
+            <tr>
+                <td>{{ collection_t.id }}</td>
+                <td>{{ collection_t.nom }}</td>
+                <td>{{ collection_t.description }}</td>
+               
+            </tr>
+        
+        </tbody>
+
+       
+    </table>
+
+    <a href="{{ path('app_collections_index') }}">back to list</a>
+
+    <a href="{{ path('app_collections_edit', {'id': collection_t.id}) }}">edit</a>
+
+    {{ include('collections/_delete_form.html.twig') }}
+{% endblock %}
