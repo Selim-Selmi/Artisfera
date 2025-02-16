@@ -38,6 +38,24 @@ final class TextileController extends AbstractController
         ]);
     }
 
+    #[Route('/client', name: 'app_textile_client', methods: ['GET'])]
+    public function client(Request $request, TextileRepository $textileRepository, CollectionTRepository $collectionRepository): Response
+    {
+        $collections = $collectionRepository->findAll();
+        $selectedCollectionId = $request->query->get('collection_id');
+    
+        $textiles = $selectedCollectionId
+        ? $textileRepository->findByCollection($selectedCollectionId)
+        : $textileRepository->findAll();
+    
+    
+        return $this->render('textile/client.html.twig', [
+            'textiles' => $textiles,
+            'collections' => $collections,
+            'selectedCollection' => $selectedCollectionId ? $collectionRepository->find($selectedCollectionId) : null,
+        ]);
+    }
+
     #[Route('/new', name: 'app_textile_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger, ParameterBagInterface $params): Response
     {

@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Textile Index{% endblock %}
+{% block title %}Galerie des Œuvres{% endblock %}
 
 {% block body %}
     <style>
@@ -174,7 +174,37 @@
     color: white;
 }
 
+
     </style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <!-- Collection Filter -->
 <form method="GET" action="{{ path('app_textile_index') }}" class="mb-3" >
@@ -192,8 +222,140 @@
     </div>
 
 
+
+
+</form>
+
+
+
+
+
+
+  <div class="preloader">
+    <div class="lds-ripple">
+        <div></div>
+        <div></div>
+    </div>
+  </div><!-- /.preloader -->
+  <div class="page-wrapper">
+    <section class="collection-grid collection-masonary">
+        <div class="container">
+            <div class="collection-grid__top"></div><!-- /.collection-grid__top -->
+
+            <div class="row high-gutter filter-layout masonary-layout">
+                {% if textiles is defined %}
+                    {% for textile in textiles %}
+                        <div class="col-lg-4 col-md-6 filter-item masonary-item pic">
+                            <div class="collection-grid__single">
+                                <div class="collection-grid__image">
+                                                <img src="{{ asset(textile.image) }}" alt="{{ textile.nom }}">
+                                    
+                                    <!-- Bouton pour ouvrir le modal -->
+                                    <a href="#" class="collection-grid__link" data-bs-toggle="modal" data-bs-target="#textileModal{{ textile.id }}">+</a>
+                                </div>
+                                <div class="collection-grid__content">
+                                    <h3><a href="#">{{ textile.nom }}</a></h3>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Modal Détails avec image à gauche et infos à droite -->
+                        <div class="modal fade" id="textileModal{{ textile.id }}" tabindex="-1" aria-labelledby="textileModalLabel{{ textile.id }}" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="textileModalLabel{{ textile.id }}">{{ textile.nom }}</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <!-- Image à gauche -->
+                                            <div class="col-md-5">
+                                                <img src="{{ asset(textile.image) }}" alt="{{ textile.nom }}">
+                                            </div>
+                                              
+                                            <!-- Infos à droite -->
+                                            <div class="col-md-7">
+                                                <p><strong>Nom:</strong> {{ textile.nom}}</p>
+                                                <p><strong>Description:</strong> {{ textile.description }}</p>
+                                                <p><strong>Type:</strong> {{ textile.type  }}</p>
+                                                <p><strong>Couleur:</strong> {{ textile.couleur }}</p>
+                                                <p><strong>Dimensions:</strong> {{ textile.dimension }}</p>
+                                                <p><strong>Créateur:</strong> {{ textile.createur }}</p>
+                                                <p><strong>Matière:</strong> {{ textile.matiere }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div><!-- /.row -->
+        </div><!-- /.container -->
+    </section><!-- /.collection-grid -->
+  </div><!-- /.page-wrapper -->
+    <a href="#" data-target="html" class="scroll-to-target scroll-to-top"><i class="fa fa-angle-up"></i></a>
+    <!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{# <!-- Collection Filter -->
+<form method="GET" action="{{ path('app_textile_index') }}" class="mb-3" >
+    <!-- Filter on the left -->
+    <div style="display: flex; align-items: center; gap: 8px;">
+        <label for="collectionFilter">Filter by Collection:</label>
+        <select name="collection_id" id="collectionFilter" onchange="this.form.submit()">
+            <option value="">All Collections</option>
+            {% for collection in collections %}
+                <option value="{{ collection.id }}" {% if selectedCollection and selectedCollection.id == collection.id %}selected{% endif %}>
+                    {{ collection.nom }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+
+
     <!-- Button on the right -->
-        <a href="{{ path('app_textile_client') }}" class="btn btn-primary" style="margin-left: auto;">Client</a>
+        <a href="{{ path('app_textile_index') }}" class="btn btn-primary" style="margin-left: auto;">Client</a>
 
     <a href="{{ path('app_textile_new') }}" class="btn btn-primary" style="margin-left: auto;">Create New Textile</a>
         <a href="{{ path('app_collections_new') }}" class="btn btn-primary" style="margin-left: auto;">Create New Collection</a>
@@ -214,7 +376,6 @@
                 <th>Créateur</th>
                 <th>Image</th>
                 <th>Technique</th>
-                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -238,7 +399,6 @@
                 <td>{{ textile.technique }}</td>
                 <td>
                     <a href="{{ path('app_textile_show', {'id': textile.id}) }}">Show</a> |
-                    <a href="{{ path('app_textile_edit', {'id': textile.id}) }}">Edit</a>
                 </td>
             </tr>
         {% else %}
@@ -249,4 +409,4 @@
         </tbody>
     </table>
 
-{% endblock %}
+{% endblock %} #}
