@@ -51,8 +51,6 @@ class Oeuvre
     private ?string $createur = null;
 
     #[ORM\Column(length: 255)]
-    // #[Assert\NotBlank(message: "L'image est obligatoire.")]
-    #[Assert\File(mimeTypes: ["image/jpeg", "image/png"], mimeTypesMessage: "Seuls les fichiers JPG et PNG sont acceptés.")]
     private ?string $image = null;
 
     #[ORM\Column(length: 255)]

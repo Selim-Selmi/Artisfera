@@ -14,6 +14,8 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use App\Repository\OeuvreRepository;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 final class GalerieceramicController extends AbstractController
 {
@@ -56,7 +58,7 @@ public function ajoutOeuvre(Request $request, EntityManagerInterface $entityMana
     ]);
 }
 
-    
+//search function 
 
 
 
@@ -116,36 +118,80 @@ public function ajoutOeuvre(Request $request, EntityManagerInterface $entityMana
         
     }
 
-    //edit
-    #[Route('/edit-oeuvre/{id}', name: 'app_edit_oeuvre')]
-    public function editOeuvre(Oeuvre $oeuvre, Request $request, EntityManagerInterface $entityManager): Response
-    {
-        $form = $this->createForm(OeuvreType::class, $oeuvre);
-        $form->handleRequest($request);
-    
-        if ($form->isSubmitted() && $form->isValid()) {
-            /** @var UploadedFile $imageFile */
+//edit
+#[Route('/edit-oeuvre/{id}', name: 'app_edit_oeuvre', methods: ['GET', 'POST'])]
+public function editOeuvre(Request $request, Oeuvre $oeuvre, EntityManagerInterface $entityManager, SluggerInterface $slugger, ParameterBagInterface $params): Response
+{
+    // Create the form and handle the request
+    $form = $this->createForm(OeuvreType::class, $oeuvre);
+    $form->handleRequest($request);
+
+    // Save the current image path
+    $currentImage = $oeuvre->getImage();
+
+    if ($form->isSubmitted()) {
+        if ($form->isValid()) {
+            // Debug: Check the entity state before changes
+            dump('Before changes:', $oeuvre);
+
+            // Handle image upload
             $imageFile = $form->get('image')->getData();
-    
+
             if ($imageFile) {
-                $destination = $this->getParameter('kernel.project_dir') . '/public/uploads/images';
-                $newFilename = uniqid() . '.' . $imageFile->guessExtension();
-                $imageFile->move($destination, $newFilename);
-    
-                $oeuvre->setImage($newFilename);
+                // Generate a unique filename
+                $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename . '-' . uniqid() . '.' . $imageFile->guessExtension();
+                $targetDirectory = $params->get('uploads_images_directory');
+
+                // Ensure the target directory exists
+                if (!file_exists($targetDirectory)) {
+                    mkdir($targetDirectory, 0777, true);
+                }
+
+                try {
+                    // Move the uploaded file to the target directory
+                    $imageFile->move($targetDirectory, $newFilename);
+                } catch (FileException $e) {
+                    $this->addFlash('error', 'Erreur lors du téléchargement du fichier : ' . $e->getMessage());
+                    return $this->redirectToRoute('app_edit_oeuvre', ['id' => $oeuvre->getId()]);
+                }
+
+                // Set the new image path (relative to the public directory)
+                $oeuvre->setImage('uploads/images/' . $newFilename);
+
+                // Delete the old image if it exists
+                if ($currentImage && file_exists($params->get('uploads_images_directory') . '/' . basename($currentImage))) {
+                    unlink($params->get('uploads_images_directory') . '/' . basename($currentImage));
+                }
+            } else {
+                // Keep the old image if no new image is uploaded
+                $oeuvre->setImage($currentImage);
             }
-    
+
+            // Debug: Check the entity state after changes
+            dump('After changes:', $oeuvre);
+
+            // Persist changes to the database
             $entityManager->flush();
-    
+
+            // Add a success flash message
             $this->addFlash('success', 'L\'œuvre a été modifiée avec succès!');
+
+            // Redirect to the gallery page
             return $this->redirectToRoute('app_galerieceramic');
+        } else {
+            // Debug: Display form validation errors
+            dump('Form errors:', $form->getErrors(true, false));
         }
-    
-        return $this->render('galerieceramic/edit.html.twig', [
-            'form' => $form->createView(),
-        ]);
     }
-    
+
+    // Render the edit form template
+    return $this->render('galerieceramic/edit.html.twig', [
+        'oeuvre' => $oeuvre,
+        'form' => $form->createView(),
+    ]);
+}
 
 
 }

@@ -38,6 +38,9 @@
                 <div class="mb-3">
                     {{ form_label(form.image, 'Image', {'label_attr': {'class': 'form-label fw-bold'}}) }}
                     {{ form_widget(form.image, {'attr': {'class': 'form-control'}}) }}
+                    {# <img src="{{ asset(oeuvre.image) }}" alt="Image de l'œuvre {{ oeuvre.nom }}" style="max-width: 90px; height: auto;" /> #}
+
+               <img src="{{ asset('uploads/images/' ~ oeuvre.image) }}" alt="Image de l'œuvre {{ oeuvre.nom }}" style="max-width: 150px; height: auto;">
                 </div>
                 <div class="mb-3">
                     {{ form_label(form.description, 'Description', {'label_attr': {'class': 'form-label fw-bold'}}) }}
@@ -55,12 +58,45 @@
         </div>
 
         <!-- Boutons en bas bien alignés -->
-        <div class="d-flex justify-content-end mt-4">
+        {# <div class="d-flex justify-content-end mt-4">
             <a href="{{ path('app_galerieceramic') }}" class="btn btn-secondary me-2">Annuler</a>
             <button type="submit" class="btn btn-primary">Modifier</button>
-        </div>
+        </div> #}
+
+        <!-- Boutons en bas bien alignés -->
+<div class="d-flex justify-content-end mt-4">
+    <a href="{{ path('app_galerieceramic') }}" class="btn btn-secondary me-2">Annuler</a>
+    <button type="button" class="btn btn-primary" id="update-btn">Modifier</button>
+</div>
+
 
         {{ form_end(form) }}
     </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById("update-btn").addEventListener("click", function(event) {
+        event.preventDefault(); // Prevent default form submission
+        
+        Swal.fire({
+            title: "Are you sure?",
+            text: "Do you want to update this artwork?",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, update it!",
+            cancelButtonText: "Cancel"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.querySelector("form").submit(); // Submit the form if confirmed
+            }
+        });
+    });
+});
+</script>
+
 {% endblock %}
