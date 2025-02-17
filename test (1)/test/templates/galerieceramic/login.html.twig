@@ -1,0 +1,60 @@
+{% extends 'Login.html.twig' %}
+
+{% block title %}Log in!{% endblock %}
+
+{% block body %}
+{{parent()}}
+
+ <section class="ftco-section mb-5">
+			<div class="row justify-content-center ">
+				<div class="col-md-6 col-lg-4"> 
+					<div class="login-wrap p-0">
+                    
+                    <form action="{{ path('app_login') }}" method="post" 
+                        class="container mt-5 p-4 rounded shadow-sm"
+                         style="width: 500px; height: auto; background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(10px);">
+
+                        <h2 class="text-center mb-5 " style="color: black;">Connexion</h2>
+
+                        {% if error %}
+                            <div class="alert alert-danger text-center">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                        {% endif %}
+
+                        {% if app.user %}
+                            <div class="alert alert-info text-center">
+                                Connecté en tant que <strong>{{ app.user.userIdentifier }}</strong>
+                                <br>
+                                <a href="{{ path('app_logout') }}" class="btn btn-sm btn-danger mt-2">Déconnexion</a>
+                            </div>
+                        {% endif %}
+
+                        <div class="mb-3">
+                            <label for="username" class="form-label" style="color: black;">Email</label>
+                            <input type="email" value="{{ last_username }}" name="_username" id="username" class="form-control-lg" autocomplete="email" required autofocus>
+                        </div>
+
+                        <div class="mb-5">
+                            <label for="password" class="form-label" style="color: black;">Mot de passe</label>
+                            <input type="password" name="_password" id="password" class="form-control-lg" autocomplete="current-password" required>
+                        </div>
+
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+                        <div class="d-grid mb-5">
+                            <button type="submit" class=" btn-primary"        
+                            style="background: linear-gradient(45deg, #007bff, #0056b3); border: none; padding: 12px; font-size: 16px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); transition: 0.3s;">
+                            Se connecter</button>
+                        </div>
+
+                        <div class="text-center">
+                            <a href="{{ path('app_register') }}" class="text-decoration-none">Créer un compte</a>
+                            <span class="mx-2">|</span>
+                            <a href="{{ path('app_forgot_password') }}" class="text-decoration-none">Mot de passe oublié</a>
+                        </div>
+                    </form>
+
+				</div>
+			</div>
+		</div>
+</section>
+{% endblock %}

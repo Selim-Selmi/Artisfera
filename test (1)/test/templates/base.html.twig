@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<style>
+   .carousel-control-prev, .carousel-control-next {
+    background-color: green; /* Fond vert complet */
+    width: 8%; /* Ajuste la taille du bouton */
+    opacity: 1; /* Assure que le fond est bien visible */
+    border-radius: 5px; /* Arrondi léger */
+}
+
+.carousel-control-prev:hover, .carousel-control-next:hover {
+    background-color: darkgreen; /* Assombrit au survol */
+}
+
+.exhibition-two {
+    padding: 60px 0;
+    background-color: #f8f8f8;
+}
+
+.exhibition-two__single {
+    border-radius: 10px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.exhibition-two__single:hover {
+    transform: translateY(-5px);
+}
+
+.exhibition-two__image {
+    width: 100%;
+    height: 250px; /* Fixe une hauteur uniforme pour toutes les images */
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.exhibition-two__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Empêche la déformation des images */
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.exhibition-two__content {
+    padding: 15px;
+    text-align: center;
+}
+
+.exhibition-two__content h3 {
+    font-size: 20px;
+    margin-bottom: 5px;
+}
+
+.exhibition-two__content span {
+    display: block;
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.exhibition-two__content p {
+    font-size: 16px;
+    color: #333;
+}
+
+.exhibition-two__link {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 8px 15px;
+    border-radius: 5px;
+    background: #ff5a5f;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background 0.3s ease;
+}
+
+.exhibition-two__link:hover {
+    background: #e0484e;
+}
+
+
+.sponsor-list {
+            padding: 50px 0;
+            background: #f8f8f8;
+        }
+
+        .container {
+            width: 80%;
+            margin: auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 30px;
+        }
+
+        .sponsor-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #fff;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .sponsor-date {
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            color: #9c815e;
+        }
+
+        .sponsor-info {
+            display: flex;
+            align-items: center;
+            flex-grow: 1;
+            margin-left: 20px;
+        }
+
+        .sponsor-logo img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .sponsor-details {
+            margin-left: 15px;
+        }
+
+        .sponsor-details h3 {
+            font-size: 22px;
+            margin-bottom: 5px;
+        }
+
+        .sponsor-action .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            border: 1px solid #000;
+            text-decoration: none;
+            color: #000;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .sponsor-action .btn:hover {
+            background: #9c815e;
+            color: #fff;
+        }
+
+       
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-5px); }
+    100% { transform: translateY(0px); }
+}
+
+.sponsor-logo {
+    animation: float 3s ease-in-out infinite;
+}
+
+.sponsor-logo {
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.sponsor-logo:hover {
+    transform: scale(1.1); /* Zoom de 10% */
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2); /* Augmentation de l'ombre */
+}
+
+</style>
+<head>{% block head %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artisfera</title>
+
+    <!-- favicons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="{{asset('assets/images/favicon/apple-touch-icon.png')}}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{asset('assets/images/favicon/favicon-32x32.png')}}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{asset('assets/images/favicon/favicon-16x16.png')}}">
+    <link rel="manifest" href="{{asset('assets/images/favicon/site.webmanifest')}}">
+
+    <!-- Fonts URL -->
+    <link href="../css?family=Karla:400,700%7CPlayfair+Display:400,500,600,700,800,900%7CWork+Sans:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+
+{% block css%}
+    <!-- Plugins CSS -->
+    <link rel="stylesheet" href="{{asset('assets/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/bootstrap-datepicker.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/bootstrap-select.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/fontawesome-all.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/jquery.mCustomScrollbar.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/magnific-popup.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/owl.carousel.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/owl.theme.default.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/animate.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/hover-min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/muzex-icons.css')}}">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/responsive.css')}}">
+    {% endblock %} 
+    {% endblock %} 
+
+</head>
+
+{#     <div class="preloader">
+        <div class="lds-ripple">
+            <div></div>
+            <div></div>
+        </div>
+    </div> #}<!-- /.preloader -->
+    <div class="page-wrapper">
+        <div class="topbar-one topbar-one__home-two">
+            <div class="container">
+                <div class="topbar-one__left">
+                    <p>Bienvenue à notre site et bonne navigation !!</p>
+                </div><!-- /.topbar-one__left -->
+                <div class="topbar-one__right">
+{#                     <a href="#"><i class="far fa-clock"></i> Mon - Sat 9.00 - 18.00</a>
+ #}                    <a href="#"><i class=""></i> (+216) 22 468 791</a>
+                        <a href="{{path('app_profile')}}">Profile</a>
+                        <a href="{{path('app_logout')}}">Deconnection</a>
+
+                   {#  <a href="#" class="thm-btn topbar__btn">Buy Tickets</a><!-- /.thm-btn --> #}
+                </div><!-- /.topbar-one__right -->
+            </div><!-- /.container -->
+        </div><!-- /.topbar-one -->
+
+<!-- /.main-nav-one -->
+        <!-- banner section -->
+        
+<body>
+{% block body %}
+<nav class="main-nav-one stricky main-nav-one__home-twostyle="background-color: #cabcb2; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+            <div class="container">
+                <div class="inner-container">
+                    <div class="logo-box">
+                        <a href={{path('app_login')}}>
+                            <img src="assets/images/o.png" alt width="143">
+                        </a>
+                        <a href="#" class="side-menu__toggler"><i class="muzex-icon-menu"></i></a>
+                    </div><!-- /.logo-box -->
+                    <div class="main-nav__main-navigation">
+                        <ul class="main-nav__navigation-box">
+                        <li><a href={{path('app_membre')}}>Accueil</a></li>
+                            <li class="dropdown">
+                                <a href="#">Peinture</a>
+                                <ul>
+                                    <li><a href={{ path('app_peinture_list')}}>liste des peinture</a></li>
+                                    <li><a href={{ path('app_style_list')}}>Liste des styles</a></li>
+                                   {#  <li class="dropdown">
+                                        <a href="#">Header Styles</a>
+                                        <ul>
+                                            <li><a href="index.html">Header 01</a></li>
+                                            <li><a href="index-2.html">Header 02</a></li>
+                                            <li><a href="index-3.html">Header 03</a></li>
+                                        </ul>
+                                    </li> #}
+                                </ul>
+                            </li>
+                            <li><a href="{{ path('app_Musique_list')}}">Musique</a></li>
+                                <li class="dropdown">
+                                <a href="#">Evénements</a>
+                                <ul>
+                                    <li><a href="{{path('app_event_index')}}">Liste des événement</a></li>
+                                    <li><a href="{{path('app_sponsor_index')}}">Liste des sponsors</a></li>
+
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#">Textile</a>
+                                <ul>
+                                    <li><a href="{{path('app_textile_index')}}">Liste des Textiles</a></li>
+                                    <li><a href="{{path('app_collections_index')}}">Liste des Collections textilles</a></li>
+
+                                </ul>
+                            </li>
+                           <li class="dropdown">
+                                <a href="#">Galerie Ceramic</a>
+                                <ul>
+                                    <li><a href="{{path('app_galerieceramic')}}">Galerie Ceramic</a></li>
+                                    <li><a href="{{path('app_ceramic_collection_index')}}">Liste des Collection</a></li>
+
+                                </ul>
+                            </li>
+                        </ul><!-- /.main-nav__navigation-box -->
+                    </div><!-- /.main-nav__main-navigation -->
+                   {#  <div class="main-nav__right">
+                        <a href="#" class="search-popup__toggler"><i class="muzex-icon-search"></i></a>
+                        <a class="sidemenu-icon side-content__toggler" href="#"><i class="muzex-icon-menu"></i></a>
+                    </div><!-- /.main-nav__right --> #}
+                </div><!-- /.inner-container -->
+            </div><!-- /.container -->
+        </nav>
+
+    {% block js %} 
+    <!-- Template JS -->
+
+    <script src="{{asset('assets/js/jquery.min.js')}}"></script>
+    <script src="{{asset('assets/js/bootstrap.bundle.min.js')}}"></script>
+    <script src="{{asset('assets/js/bootstrap-datepicker.min.js')}}"></script>
+    <script src="{{asset('assets/js/bootstrap-select.min.js')}}"></script>
+    <script src="{{asset('assets/js/isotope.js')}}"></script>
+    <script src="{{asset('assets/js/jquery.ajaxchimp.min.js')}}"></script>
+    <script src="{{asset('assets/js/jquery.counterup.min.js')}}"></script>
+    <script src="{{asset('assets/js/jquery.magnific-popup.min.js')}}"></script>
+    <script src="{{asset('assets/js/jquery.mCustomScrollbar.concat.min.js')}}"></script>
+    <script src="{{asset('assets/js/jquery.validate.min.js')}}"></script>
+    <script src="{{asset('assets/js/owl.carousel.min.js')}}"></script>
+    <script src="{{asset('assets/js/TweenMax.min.js')}}"></script>
+    <script src="{{asset('assets/js/waypoints.min.js')}}"></script>
+    <script src="{{asset('assets/js/wow.min.js')}}"></script>
+    <script src="{{asset('assets/js/jquery.lettering.min.js')}}"></script>
+    <script src="{{asset('assets/js/jquery.circleType.js')}}"></script>
+
+
+    <!-- Custom Scripts -->
+    <script src="{{asset('assets/js/theme.js')}}"></script>
+    {% endblock %} 
+    {% endblock %} 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+<footer class="site-footer">{% block footer %} 
+            <div class="site-footer__upper">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="footer-widget footer-widget__about">
+                                <p>Bienvenue dans le plus moderne site d'art au monde.</p>
+                                <p>Il comprend des œuvres d'art créées durant la période s'étendant d'environ 1860 aux années 1970.</p>
+                            </div><!-- /.footer-widget -->
+                        </div><!-- /.col-lg-4 -->
+                        <div class="col-lg-4">
+                            <div class="footer-widget footer-widget__links">
+                                <h3 class="footer-widget__title">Quick Link</h3><!-- /.footer-widget__title -->
+                                <ul class="footer-widget__links-list list-unstyled">
+                                    <li>
+                                        <a href="{{ path('app_membre')}}">Accueil</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Evénements</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ path('app_peinture_list')}}">Gallerie des peintures</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ path('app_Musique_list')}}">Nouveautés de la musique</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Textile</a>
+                                    </li>
+                                </ul><!-- /.footer-widget__links-list -->
+                            </div><!-- /.footer-widget -->
+                        </div><!-- /.col-lg-2 -->
+                        <div class="col-lg-3">
+                            <div class="footer-widget footer-widget__contact">
+                                <h3 class="footer-widget__title">Contact</h3><!-- /.footer-widget__title -->
+                               <a href="https://www.facebook.com/Artisfera" target="_blank">
+                                    <i class="fab fa-facebook-f"></i> Artisfera</a>
+                                <p><a href="tel:(+216)-22468791">(+216) 22468791</a></p>
+                                <p><a href="mailto:example@muzex.com">Admin@artisfera.com</a></p>
+                            </div><!-- /.footer-widget -->
+                        </div><!-- /.col-lg-3 -->
+                        {# <div class="col-lg-3">
+                            <div class="footer-widget footer-widget__open-hrs">
+                                <h3 class="footer-widget__title">Open Hours</h3><!-- /.footer-widget__title -->
+                                <p>Daily: 9.30 AM–6.00 PM <br>
+                                    Sunday & Holidays: Closed</p>
+                            </div><!-- /.footer-widget -->
+                        </div><!-- /.col-lg-3 --> #}
+                    </div><!-- /.row -->
+                </div><!-- /.container -->
+            </div><!-- /.site-footer__upper -->
+            <div class="site-footer__bottom">
+                <div class="container">
+                    <div class="inner-container">
+                        <p>&copy; Copyright 2020 Arisfera. All Rights Reserved</p>
+                        <a href="base.html" class="site-footer__bottom-logo">
+                            <img src="assets/images/o.png" alt width="250">
+                        </a>
+                        <div class="site-footer__bottom-links">
+                            <a href="#">Terms & conditions</a>
+                            <a href="#">Privacy policy & Terms of use</a>
+                        </div><!-- /.site-footer__bottom-links -->
+                    </div><!-- /.inner-container -->
+                </div><!-- /.container -->
+            </div><!-- /.site-footer__bottom -->
+        {% endblock %} </footer>
+
+</html>
