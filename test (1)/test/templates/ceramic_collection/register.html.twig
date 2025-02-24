@@ -1,0 +1,74 @@
+{% extends 'Login.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+{{parent()}}
+<section class="ftco-section mb-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-4">
+            <div class="login-wrap p-0">
+
+                <form method="post" 
+                    class="container mt-5 p-4 rounded shadow-sm"
+                    style="width: 500px; height: auto; background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(10px);">
+
+                    <h2 class="text-center mb-5" style="color: black;">Inscription</h2>
+
+                    {{ form_start(registrationForm) }}
+
+                    <div class="mb-3">
+                        <label for="email" class="form-label" style="color: black;">Email</label>
+                        {{ form_widget(registrationForm.email, {'attr': {'class': 'form-control-lg'}}) }}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="nom" class="form-label" style="color: black;">Nom</label>
+                        {{ form_widget(registrationForm.nom, {'attr': {'class': 'form-control-lg'}}) }}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="prenom" class="form-label" style="color: black;">Prénom</label>
+                        {{ form_widget(registrationForm.prenom, {'attr': {'class': 'form-control-lg'}}) }}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="genre" class="form-label" style="color: black;">Genre</label>
+                        {{ form_widget(registrationForm.genre, {'attr': {'class': 'form-select-lg'}}) }}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="password" class="form-label" style="color: black;">Mot de passe</label>
+                        {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'form-control-lg'}}) }}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="roles" class="form-label" style="color: black;">Rôles</label>
+                        {{ form_widget(registrationForm.roles, {'attr': {'class': 'form-check-lg'}}) }}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form_widget(registrationForm.agreeTerms) }}
+                        <label for="agreeTerms" class="form-label" style="color: black;">Accepter les termes</label>
+                    </div>
+
+                    <div class="d-grid mb-5">
+                        <button type="submit" class="btn-primary" for"Envoyer"
+                            style="background: linear-gradient(45deg, #007bff, #0056b3); border: none; padding: 12px; font-size: 16px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); transition: 0.3s;">
+                            S'inscrire
+                        </button>
+                    </div>
+
+                    <div class="text-center">
+                        <a href="{{ path('app_login') }}" class="text-decoration-none">Connectez-vous</a>
+                    </div>
+
+                    {{ form_end(registrationForm) }}
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

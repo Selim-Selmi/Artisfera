@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New CeramicCollection{% endblock %}
+
+{% block body %}
+{{parent()}}
+    <h1>Create new CeramicCollection</h1>
+
+    {{ include('ceramic_collection/_form.html.twig') }}
+
+    <a href="{{ path('app_ceramic_collection_index') }}">back to list</a>
+{% endblock %}

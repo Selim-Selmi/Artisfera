@@ -1,0 +1,168 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des evenements{% endblock %}
+
+{% block body %}
+{{parent()}}
+<div class="container mt-5">
+<h1 class="text-center">🎭 Liste des événements </h1>
+    {% if 'ROLE_PEINTURE' in app.user.roles or 'ROLE_MUSIQUE' %}
+   
+    <h1 class="text-center mt-4"> 
+    <a href="{{ path('app_event_new') }}" class="btn btn-success mb-4">Ajouter événement</a>
+</h1>
+    {% endif %}
+
+    <div class="row justify-content-center">
+        {% if events is defined and events is not empty %}
+            {% for event in events %}
+                <div class="col-md-4">
+                    <div class="card mb-4 shadow-lg">
+                            <a href="{{ path('app_event_show', {id: event.id}) }}">
+                                    <img src="{{ asset('uploads/photosP/' ~ event.image) }}" alt="{{ event.titre }}" class="card-img-top" style="height: 300px; object-fit: contain;">
+                            </a>                        <div class="card-body text-center">
+                        <h5 class="fw-bold" style="color: brown;">{{ event.titre }}</h5> 
+                            <p class="card-text"><b>Date  :</b> {{ event.date | date('d-m-Y') }}</p>
+                            <p class="card-text"><b>Heure :</b> {{ event.heure | date('H:i') }}</p>
+                            <p class="card-text"><b>Localisation :</b> {{ event.localisation }}</p>
+
+                             <!-- Bouton Popover -->
+<a href="javascript:void(0);" class="text-dark popover-trigger" 
+   tabindex="0" 
+   data-bs-toggle="popover" 
+   data-bs-trigger="focus" 
+   data-bs-html="true" 
+   data-bs-placement="right" 
+   data-bs-content="
+       <a href='{{ path('app_event_edit', {id: event.id}) }}' class='btn btn-outline-success btn-sm d-block mb-2'>Edit</a>
+       <a href='{{ path('app_event_delete', {id: event.id}) }}' class='btn btn-outline-danger btn-sm d-block'>Delete</a>
+   "
+   style="margin-right: 185px;">
+    <i class="fas fa-ellipsis-h"></i>
+</a>
+
+<!-- Bouton Voir les Sponsors -->
+<button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#sponsorsModal{{ event.id }}" style="margin-left: 15px;">
+    Sponsors
+</button>
+<!-- Modal -->
+<div class="modal fade" id="sponsorsModal{{ event.id }}" tabindex="-1" aria-labelledby="sponsorsModalLabel{{ event.id }}" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="sponsorsModalLabel{{ event.id }}">Sponsors de l'événement: {{ event.titre }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Liste des sponsors -->
+                {% if event.sponsors is not empty %}
+                    <ul>
+                        {% for sponsor in event.sponsors %}
+                            <li class="d-flex align-items-center">
+                                <!-- Affiche l'image du logo du sponsor à gauche -->
+                                {% if sponsor.logo is not null %}
+                                <div class="sponsor-logo">
+                                    <img src="{{ asset('uploads/photosP/sponsors/' ~ sponsor.logo) }}" alt="{{ sponsor.nom }}"  class="sponsor-logo" style="max-width: 100px;"> 
+    
+                                {% else %}
+                                    <p>Aucun logo disponible</p>
+                                {% endif %}
+                                <!-- Affiche le nom du sponsor à droite -->
+                                <span>{{ sponsor.nom }}</span>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>Aucun sponsor pour cet événement.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+                            <!-- 3 Dots Icon for Edit and Delete Popover -->
+   {#  {% if event.userid == app.user.id %}
+    <a href="javascript:void(0);" class="text-dark popover-trigger"
+       tabindex="0"
+       data-bs-toggle="popover"
+       data-bs-trigger="focus"
+       data-bs-html="true"
+       data-bs-placement="right"
+       data-bs-content="
+           <a href='{{ path('app_event_edit', {id: event.id}) }}' class='btn btn-success btn-sm d-block mb-2'>Edit</a>
+           <a href='{{ path('app_event_delete', {id: event.id}) }}' class='btn btn-danger btn-sm d-block'>Delete</a>
+       ">
+        <i class="fas fa-ellipsis-h"></i>
+    </a>  
+    {% endif %} #}
+    </div>
+                    </div>
+                </div>
+
+               
+            {% endfor %}
+        {% else %}
+            <p class="text-center mt-4">Aucun événement disponible.</p>
+        {% endif %}
+    </div>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
+        var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+            return new bootstrap.Popover(popoverTriggerEl);
+        });
+    });
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var popoverTriggers = document.querySelectorAll('.popover-trigger');
+        popoverTriggers.forEach(trigger => {
+            new bootstrap.Popover(trigger);
+        });
+    });
+</script>
+
+<!-- JavaScript to Handle Form Toggle -->
+<script>
+    function showEditForm(playlistId) {
+        document.getElementById('defaultOptions' + playlistId).style.display = 'none';
+        document.getElementById('editForm' + playlistId).style.display = 'block';
+        document.getElementById('playlistModalLabel' + playlistId).innerText = 'Edit Playlist';
+    }
+
+    function resetModal(playlistId) {
+        document.getElementById('defaultOptions' + playlistId).style.display = 'block';
+        document.getElementById('editForm' + playlistId).style.display = 'none';
+        document.getElementById('playlistModalLabel' + playlistId).innerText = 'Playlist Options';
+    }
+</script>
+<!-- JavaScript to Open Correct Modal --><script>
+    function openEditModal(playlistId) {
+        var modal = document.getElementById('editModal' + playlistId);
+        var bootstrapModal = new bootstrap.Modal(modal);
+        bootstrapModal.show();
+    }
+</script>
+    
+<script>
+    function confirmDelete(playlistId) {
+        var modal = new bootstrap.Modal(document.getElementById('deleteModal' + playlistId));
+        modal.show();
+    }
+
+    </script>
+    <script>
+    // Initialize Bootstrap popovers
+    document.addEventListener("DOMContentLoaded", function() {
+        var popoverTriggers = document.querySelectorAll('.popover-trigger');
+        popoverTriggers.forEach(trigger => {
+            new bootstrap.Popover(trigger);
+        });
+    });
+</script>
+<!-- Bootstrap JS (needed for popovers) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+{% endblock %}

@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+{{parent()}}
+
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Collections de Textiles</h1>
+        
+        <div class="d-flex justify-content-between mb-4">
+            <div>
+                <label for="collectionFilter" class="form-label fw-bold">Filtrer par Collection :</label>
+                <select id="collectionFilter" class="form-select">
+                    <option value="all">Toutes les collections</option>
+                    {% for collection in collections %}
+                        <option value="collection-{{ collection.id }}">{{ collection.nom }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+                {% if 'ROLE_TEXTILE' in app.user.roles %}
+            <a href="{{ path('app_collections_new') }}" class="btn btn-success">
+                <i class="fas fa-plus"></i> Nouvelle Collection
+            </a>            
+            <a href="{{ path('app_textile_new') }}" class="btn btn-success">
+                <i class="fas fa-plus"></i> Nouvelle textile
+            </a>
+            {% endif %}
+        </div>
+
+        <div class="row row-cols-1 row-cols-md-3 g-4" id="textileContainer">
+            {% for collection in collections %}
+                {% for textile in collection.textiles %}
+                    <div class="col textile-item collection-{{ collection.id }}">
+                        <div class="card shadow-sm border-0">
+                            <img src="{{ asset(textile.image) }}" class="card-img-top rounded" alt="{{ textile.nom }}">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">{{ textile.nom }}</h5>
+                                <p class="text-muted small">Collection : {{ collection.nom }}</p>
+                                
+                            </div>
+{#                                     {% if textile.userid == app.user.id %}
+ #}                                        <a href="{{ path('app_textile_edit', {'id': textile.id} ) }}" class="btn btn-success">
+                                            <i class="fas fa-plus"></i> edit
+                                        </a>                                       
+                                         <a href="{{ path('app_textile_delete', {'id': textile.id} ) }}" class="btn btn-success">
+                                            <i class="fas fa-plus"></i> delete
+                                        </a>
+{#                                     {% endif %}
+ #}                             </div>
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("collectionFilter").addEventListener("change", function() {
+            let selectedCollection = this.value;
+            let textiles = document.querySelectorAll(".textile-item");
+
+            textiles.forEach(textile => {
+                if (selectedCollection === "all" || textile.classList.contains(selectedCollection)) {
+                    textile.style.display = "block";
+                } else {
+                    textile.style.display = "none";
+                }
+            });
+        });
+    </script>
+{% endblock %}

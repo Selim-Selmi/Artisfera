@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}CeramicCollection index{% endblock %}
+
+{% block body %}
+{{parent()}}
+    <h1>CeramicCollection index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                {# <th>Id</th> #}
+                <th>Nom_c</th>
+                <th>Description_c</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for ceramic_collection in ceramic_collections %}
+            <tr>
+                {# <td>{{ ceramic_collection.id }}</td> #}
+                <td>{{ ceramic_collection.nomC }}</td>
+                <td>{{ ceramic_collection.descriptionC }}</td>
+                <td>
+                    {% if ceramic_collection.userid == app.user.id %}
+                    <a href="{{ path('app_ceramic_collection_show', {'id': ceramic_collection.id}) }}">show</a>
+                    <a href="{{ path('app_ceramic_collection_edit', {'id': ceramic_collection.id}) }}">edit</a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% if 'ROLE_CERAMIQUE' in app.user.roles %}
+
+    <a href="{{ path('app_ceramic_collection_new') }}">Create new</a>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,50 @@
+# config/packages/security.yaml
+security:
+    # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
+    password_hashers:
+        Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
+    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    providers:
+        # used to reload user from session & other features (e.g. switch_user)
+        app_user_provider:
+            entity:
+                class: App\Entity\User
+                property: email
+    firewalls:
+    
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        main:
+            lazy: true
+            provider: app_user_provider
+            form_login:
+                login_path: app_login
+                check_path: app_login
+                default_target_path: app_redirect_by_role  # La route de redirection après connexion
+                enable_csrf: true
+            remember_me:
+                secret: '%kernel.secret%'  # Utilise ton secret d'application
+                lifetime: 604800  # Durée en secondes (7 jours)
+                path: /
+            logout:
+                path: /logout
+                target: /login
+                # where to redirect after logout
+                # target: app_any_route
+
+            # activate different ways to authenticate
+            # https://symfony.com/doc/current/security.html#firewalls-authentication
+
+            # https://symfony.com/doc/current/security/impersonating_user.html
+            # switch_user: true
+
+    # Easy way to control access for large sections of your site
+    # Note: Only the *first* access control that matches will be used
+    access_control:
+    - { path: ^/admin, roles: ROLE_ADMIN }
+    - { path: ^/membre, roles: ROLE_MEMBRE }
+    - { path: ^/musique, roles: ROLE_MUSIQUE }
+    - { path: ^/peinture, roles: ROLE_PEINTURE }
+    - { path: ^/textile, roles: ROLE_TEXTILE }
+    - { path: ^/ceramique, roles: ROLE_CERAMIQUE }
