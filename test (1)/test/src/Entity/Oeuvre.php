@@ -6,17 +6,21 @@ use App\Repository\OeuvreRepository;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\CeramicCollection;
 use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use App\Entity\Commentaire;
+
 
 #[ORM\Entity(repositoryClass: OeuvreRepository::class)]
 class Oeuvre
 {
     #[ORM\Id]
+
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column]
-    private ?int $userId = null;
+
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: "Le nom est obligatoire.")]
@@ -48,10 +52,10 @@ class Oeuvre
     #[Assert\Regex(pattern: "/^\d+x\d+x\d+$/", message: "Le format des dimensions doit être hxlxp (ex: 30x20x15).")]
     private ?string $dimensions = null;
 
-    #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message: "Le créateur est obligatoire.")]
-    #[Assert\Regex(pattern: "/^[a-zA-Z\s]+$/", message: "Le créateur ne doit contenir que des lettres.")]
-    private ?string $createur = null;
+    // #[ORM\Column(length: 255)]
+    // #[Assert\NotBlank(message: "Le créateur est obligatoire.")]
+    // #[Assert\Regex(pattern: "/^[a-zA-Z\s]+$/", message: "Le créateur ne doit contenir que des lettres.")]
+    // private ?string $createur = null;
 
     #[ORM\Column(length: 255)]
     private ?string $image = null;
@@ -65,6 +69,21 @@ class Oeuvre
     #[ORM\ManyToOne(targetEntity: CeramicCollection::class, inversedBy: 'oeuvres')]
     #[ORM\JoinColumn(nullable: false)]
     private ?CeramicCollection $ceramicCollection = null;
+
+    //commentaire
+    #[ORM\OneToMany(mappedBy: 'oeuvre', targetEntity: Commentaire::class)]
+    private Collection $commentaires;
+
+    public function __construct()
+    {
+        $this->commentaires = new ArrayCollection();
+    }
+
+    public function getCommentaires(): Collection
+    {
+        return $this->commentaires;
+    }
+
 
     public function getId(): ?int
     {
@@ -191,4 +210,26 @@ class Oeuvre
 
         return $this;
     }
+    //////////////user////////////
+
+
+  #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'oeuvres')]
+  #[ORM\JoinColumn(nullable: false)]
+  private ?User $user = null;
+
+  // Getters and Setters
+  public function getUser(): ?User
+  {
+      return $this->user;
+  }
+
+  public function setUser(?User $user): static
+  {
+      $this->user = $user;
+      return $this;
+  }
+
+
+  ////////////enduser////////
+
 }

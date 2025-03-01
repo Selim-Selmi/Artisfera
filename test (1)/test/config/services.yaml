@@ -8,6 +8,9 @@ parameters:
     uploads_directoryy: '%kernel.project_dir%/public/uploads'
     musique_files_directory: '%kernel.project_dir%/public/uploads/music'
     photo_files_directory: '%kernel.project_dir%/public/uploads/photos'
+    video_directory: '%kernel.project_dir%/public/uploads/videos'
+    textile_directory: '%kernel.project_dir%/public/uploads/textile'
+
 services:
     # default configuration for services in *this* file
     _defaults:

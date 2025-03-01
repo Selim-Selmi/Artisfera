@@ -10,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use App\Entity\CollectionT;
+// use Symfony\Component\Validator\Constraints\Valid;
 
 class TextileType extends AbstractType
 {
@@ -26,7 +27,7 @@ class TextileType extends AbstractType
             ->add('imageFile', FileType::class, [
                 'label' => 'Upload Image (JPG/PNG)',
                 'mapped' => false, // Important: This prevents automatic mapping to the entity
-                'required' => true, // Make it required
+                'required' => false, // Make it required
                 'constraints' => [
                     new File([
                         'maxSize' => '5M',
@@ -42,7 +43,7 @@ class TextileType extends AbstractType
                 'class' => CollectionT::class,
                 'choice_label' => 'nom', // Adjust this to the field you want to display
                 'placeholder' => 'Select a collection',
-                'required' => true,
+                'required' => false,
             ]);
 
         ;
@@ -52,6 +53,8 @@ class TextileType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Textile::class,
+            //zedtha jdida 
+            // 'constraints' => [new Valid()],
         ]);
     }
 }

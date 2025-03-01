@@ -3,3 +3,9 @@ framework:
         # The paths to make available to the asset mapper.
         paths:
             - assets/
+
+
+# framework:
+#     asset_mapper:
+#         paths:
+#             - '%kernel.project_dir%/public/assets'

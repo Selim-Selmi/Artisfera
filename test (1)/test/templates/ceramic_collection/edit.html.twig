@@ -3,12 +3,134 @@
 {% block title %}Edit CeramicCollection{% endblock %}
 
 {% block body %}
-{{parent()}}
-    <h1>Edit CeramicCollection</h1>
+{{ parent() }}
+<div class="preloader">
+    <div class="lds-ripple">
+        <div></div>
+        <div></div>
+    </div>
+</div><!-- /.preloader -->
 
-    {{ include('ceramic_collection/_form.html.twig', {'button_label': 'Update'}) }}
+<div class="page-wrapper">
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <!-- Titre de la page -->
+                <h1 class="text-center mb-4">Modifier la Collection : {{ ceramic_collection.nomC }}</h1>
 
-    <a href="{{ path('app_ceramic_collection_index') }}">back to list</a>
+                <!-- Formulaire d'édition -->
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        {{ include('ceramic_collection/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+                    </div>
+                </div>
 
-    {{ include('ceramic_collection/_delete_form.html.twig') }}
+                <!-- Boutons d'action -->
+                <div class="mt-4 text-center">
+                    <a href="{{ path('app_ceramic_collection_index') }}" class="btn btn-outline-secondary">
+                        <i class="fas fa-arrow-left"></i> Retour à la liste
+                    </a>
+                    {{ include('ceramic_collection/_delete_form.html.twig') }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!-- /.page-wrapper -->
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Font Awesome pour les icônes -->
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+
+
+<style>
+/* Style pour le titre */
+h1 {
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 1.5rem;
+    font-weight: bold;
+}
+
+/* Style pour la carte (formulaire) */
+.card {
+    border: none;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: box-shadow 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.card-body {
+    padding: 2rem;
+}
+
+/* Style pour les boutons */
+.btn {
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+}
+
+.btn-outline-secondary {
+    border-color: #6c757d;
+    color: #6c757d;
+}
+
+.btn-outline-secondary:hover {
+    background-color: #6c757d;
+    color: #fff;
+}
+
+/* Style pour le bouton de suppression */
+form {
+    display: inline-block;
+    margin-left: 10px;
+}
+
+form button {
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+form button:hover {
+    background-color: #c82333;
+}
+
+/* Style pour les champs du formulaire */
+.form-control {
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 1rem;
+}
+
+.form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Style pour les labels */
+.form-label {
+    font-weight: bold;
+    color: #555;
+    margin-bottom: 0.5rem;
+}
+</style>
+
 {% endblock %}

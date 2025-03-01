@@ -22,29 +22,59 @@ final class CeramicCollectionController extends AbstractController
         ]);
     }
 
+    // #[Route('/new', name: 'app_ceramic_collection_new', methods: ['GET', 'POST'])]
+    // public function new(Request $request, EntityManagerInterface $entityManager): Response
+    // {
+    //     $ceramicCollection = new CeramicCollection();
+    //     $user=$this->getUser();
+    //     $ceramicCollection->setUserId($user->getId()); 
+    //     $form = $this->createForm(CeramicCollectionType::class, $ceramicCollection);
+    //     $form->handleRequest($request);
+
+    //     if ($form->isSubmitted() && $form->isValid()) {
+    //         $entityManager->persist($ceramicCollection);
+    //         $entityManager->flush();
+
+    //         return $this->redirectToRoute('app_ceramic_collection_index', [], Response::HTTP_SEE_OTHER);
+    //     }
+
+    //     return $this->render('ceramic_collection/new.html.twig', [
+    //         'ceramic_collection' => $ceramicCollection,
+    //         'form' => $form,
+    //         'user'=>$user
+
+    //     ]);
+    // }
     #[Route('/new', name: 'app_ceramic_collection_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $ceramicCollection = new CeramicCollection();
-        $user=$this->getUser();
-        $ceramicCollection->setUserId($user->getId()); 
+        $user = $this->getUser();
+    
+        if ($user === null) {
+            throw $this->createAccessDeniedException('You must be logged in to create a collection.');
+        }
+    
+        // Set the user directly instead of user_id
+        $ceramicCollection->setUser($user);
+    
         $form = $this->createForm(CeramicCollectionType::class, $ceramicCollection);
         $form->handleRequest($request);
-
+    
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($ceramicCollection);
             $entityManager->flush();
-
+    
             return $this->redirectToRoute('app_ceramic_collection_index', [], Response::HTTP_SEE_OTHER);
         }
-
+    
         return $this->render('ceramic_collection/new.html.twig', [
             'ceramic_collection' => $ceramicCollection,
-            'form' => $form,
-            'user'=>$user
-
+            'form' => $form->createView(),
+            'user' => $user
         ]);
     }
+    
 
     #[Route('list/{id}', name: 'app_ceramic_collection_show', methods: ['GET'])]
     public function show(CeramicCollection $ceramicCollection): Response

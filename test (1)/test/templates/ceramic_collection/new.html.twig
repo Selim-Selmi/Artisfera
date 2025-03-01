@@ -3,10 +3,190 @@
 {% block title %}New CeramicCollection{% endblock %}
 
 {% block body %}
-{{parent()}}
-    <h1>Create new CeramicCollection</h1>
+{{ parent() }}
+<div class="preloader">
+    <div class="lds-ripple">
+        <div></div>
+        <div></div>
+    </div>
+</div><!-- /.preloader -->
 
-    {{ include('ceramic_collection/_form.html.twig') }}
+<div class="page-wrapper">
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <!-- Titre de la page -->
+                <h1 class="text-center mb-4">Créer une nouvelle collection</h1>
 
-    <a href="{{ path('app_ceramic_collection_index') }}">back to list</a>
+                <!-- Formulaire d'ajout -->
+                <div class="card shadow-lg border-0 rounded-3">
+                    <div class="card-body">
+                        {{ include('ceramic_collection/_form.html.twig') }}
+                    </div>
+                </div>
+
+                <!-- Bouton "Retour à la liste" -->
+                <div class="mt-4 text-center">
+                    <a href="{{ path('app_ceramic_collection_index') }}" class="btn btn-outline-secondary">
+                        <i class="fas fa-arrow-left"></i> Retour à la liste
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!-- /.page-wrapper -->
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Font Awesome pour les icônes -->
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+<style>
+/* Style général */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+}
+
+/* Effet sur le titre */
+h1 {
+    color: #333;
+    font-weight: 700;
+    animation: mouvement 2s infinite alternate;
+    margin-bottom: 30px;
+}
+
+@keyframes mouvement {
+    0% { transform: translateX(0); }
+    50% { transform: translateX(10px); }
+    100% { transform: translateX(0); }
+}
+
+/* Style pour la carte */
+.card {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+}
+
+.card-body {
+    padding: 2.5rem;
+}
+
+/* Effet au survol de la carte */
+.card:hover {
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* Style pour les champs du formulaire */
+.form-control {
+    border-radius: 8px;
+    border: 1px solid #ced4da;
+    padding: 12px 16px;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: #6c757d;
+    box-shadow: 0 0 8px rgba(108, 117, 125, 0.5);
+}
+
+/* Style pour les labels */
+.form-label {
+    font-weight: 600;
+    color: #555;
+    margin-bottom: 0.5rem;
+}
+
+/* Bouton d'action */
+.btn {
+    background-color: #007bff;
+    padding: 12px 24px;
+    font-size: 1.1rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+.btn-outline-secondary {
+    border-color: #6c757d;
+    color:rgb(0, 0, 0);
+    font-weight: 600;
+}
+
+.btn-outline-secondary:hover {
+    background-color:rgb(190, 211, 230);
+    color: black;
+    transform: translateY(-2px);
+}
+
+/* Bouton retour */
+.mt-4 .btn {
+    font-size: 1rem;
+    padding: 10px 20px;
+   
+    border: 2px solid #6c757d;
+    transition: all 0.3s ease;
+}
+
+.mt-4 .btn:hover {
+    background-color: #6c757d;
+    color: white;
+}
+
+/* Préloader */
+.preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.lds-ripple div {
+    position: absolute;
+    border: 4px solid #007bff;
+    opacity: 1;
+    border-radius: 50%;
+    animation: ripple 1.2s infinite ease-in-out;
+}
+
+.lds-ripple div:nth-child(1) {
+    animation-delay: -0.3s;
+}
+
+.lds-ripple div:nth-child(2) {
+    animation-delay: 0s;
+}
+
+@keyframes ripple {
+    0% {
+        transform: scale(0);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+</style>
 {% endblock %}

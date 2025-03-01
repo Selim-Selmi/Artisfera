@@ -98,4 +98,26 @@ class CeramicCollection
 
         return $this;
     }
+        //////////////user////////////
+
+
+  #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'oeuvres')]
+  #[ORM\JoinColumn(nullable: false)]
+  private ?User $user = null;
+
+  // Getters and Setters
+  public function getUser(): ?User
+  {
+      return $this->user;
+  }
+
+  public function setUser(?User $user): static
+  {
+      $this->user = $user;
+      return $this;
+  }
+
+
+  ////////////enduser////////
+
 }

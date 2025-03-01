@@ -43,9 +43,10 @@ class OeuvreType extends AbstractType
             ->add('dimensions', TextType::class, [
                 'label' => 'Dimensions',
             ])
-            ->add('createur', TextType::class, [
-                'label' => 'Créateur',
-            ])
+            // ->add('createur', TextType::class, [
+            //     'label' => 'Créateur',
+            // ])
+
             ->add('image', FileType::class, [
                 'label' => 'Image',
                 'required' => false,  // facultatif si l'image n'est pas obligatoire

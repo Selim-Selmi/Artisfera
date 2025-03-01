@@ -10,20 +10,70 @@
             <div class="container">
                 <div class="collection-grid__top">
 
-                    
-    {% if 'ROLE_CERAMIQUE' in app.user.roles %}
-
-              <a href="{{ path('app_ajout_oeuvre') }}" class="btn btn-primary">
-    Ajouter une œuvre
-</a>
-
-
- <a href="{{ path('app_ceramic_collection_new') }}" class="btn btn-primary">
-créer une nouvelle collection
-</a>
+ {% if 'ROLE_CERAMIQUE' in app.user.roles %}
+ <div class="actions-container">
+  <div class="dropdown">
+        <button class="btn btn-nude dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Actions
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="{{ path('app_ajout_oeuvre') }}">Ajouter une œuvre</a>
+            <a class="dropdown-item" href="{{ path('app_ceramic_collection_new') }}">Créer une nouvelle collection</a>
+            <a class="dropdown-item" href="{{ path('app_workshops_index') }}">Workshops</a>
+        </div>
+    </div>
+</div>
 {% endif %}
+ 
 
-                </div><!-- /.collection-grid__top -->
+<!-- Search/Filter Form Container -->
+<div class="filter-box mx-auto my-4 p-3 rounded shadow-sm">
+  <form id="search-form" class="row g-2 align-items-center m-0">
+    
+    <!-- Icon (Filter or Search) -->
+    <div class="col-auto">
+      <span class="filter-icon">
+        <i class="fas fa-filter"></i>
+      </span>
+    </div>
+
+    <!-- Text Search Input -->
+    <div class="col-sm">
+      <div class="input-group">
+        <input
+          id="search-input"
+          class="form-control border-0"
+          type="search"
+          placeholder="Rechercher une œuvre..."
+          aria-label="Search"
+        >
+      </div>
+    </div>
+
+    <!-- Select Filter Type -->
+    <div class="col-auto">
+      <select id="filter-type" class="form-select border-0">
+        <option value="nom">Nom</option>
+        <option value="categorie">Catégorie</option>
+        <option value="couleur">Couleur</option>
+        <option value="type">Type</option>
+        <option value="matiere">Matiere</option>
+      </select>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="col-auto">
+      <button class="btn btn-primary d-flex align-items-center" type="submit">
+        <i class="fas fa-search me-1"></i>
+        Filtrer
+      </button>
+    </div>
+
+  </form>
+</div>
+
+
+                </div><!-- /.collection-grid__top -->       
               
 
                 <div class="row high-gutter filter-layout masonary-layout">
@@ -31,41 +81,70 @@ créer une nouvelle collection
 
                     {% if oeuvres is defined %}
                 {% for oeuvre in oeuvres %}
-                  
-
+                
+                
     <div class="col-lg-4 col-md-6 filter-item masonary-item pic">
         <div class="collection-grid__single">
             <div class="collection-grid__image">
-                <img src="{{ asset('uploads/images/' ~ oeuvre.image) }}" alt="Image de l'œuvre {{ oeuvre.nom }}">
-                
+                <img src="{{ asset('uploads/images/' ~ oeuvre.image) }}"  alt="Image de l'œuvre {{ oeuvre.nom }}">
+                  
                 <!-- Bouton pour ouvrir le modal -->
                 <a href="#" class="collection-grid__link" data-bs-toggle="modal" data-bs-target="#oeuvreModal{{ oeuvre.id }}">+</a>
             </div>
             <div class="collection-grid__content">
                 <h3><a href="#">{{ oeuvre.nom }}</a></h3>
                 <div class="button-group">
-    {# <a href="{{ path('app_oeuvre_delete', { id: oeuvre.id }) }}" class="btn btn-danger">
-        <i class="fas fa-trash-alt"></i> <!-- Icône de suppression -->
-    </a> #}
-                    {% if oeuvre.userid == app.user.id %}
+   
+                    {% if oeuvre.user.id == app.user.id %}
 
-
-    <a href="#" class="btn btn-danger delete-btn" data-url="{{ path('app_oeuvre_delete', { id: oeuvre.id }) }}">
-    <i class="fas fa-trash-alt"></i> <!-- Icône de suppression -->
+<a href="#" class="delete-btn" data-url="{{ path('app_oeuvre_delete', { 'id': oeuvre.id }) }}">
+    <i class="fas fa-trash-alt" style="color: black;"></i> <!-- Icône de suppression -->
 </a>
 
-    <a href="{{ path('app_edit_oeuvre', { 'id': oeuvre.id }) }}" class="btn btn-primary">
-        <i class="fas fa-edit"></i> <!-- Icône d'édition -->
+
+    <a href="{{ path('app_edit_oeuvre', { 'id': oeuvre.id }) }}" >
+        <i class="fas fa-edit" style="color: black;"></i> <!-- Icône d'édition -->
     </a>
+
+    <!-- Comment Icon (opens the input field) -->
+<!-- Comment Icon (opens the input field) -->
+<a href="javascript:void(0);"  onclick="showComment({{ oeuvre.id }})">
+    <i class="fa fa-comment" style="color: black;"></i>
+</a>
+
+
+<!-- Comment Input Field (Initially hidden) -->
+<div id="comment-form-{{ oeuvre.id }}" class="comment-form" style="display:none;">
+    <textarea id="comment-text-{{ oeuvre.id }}" class="form-control" placeholder="Write your comment..."></textarea>
+    <button class="btn btn-success" onclick="submitComment({{ oeuvre.id }})">
+        <i class="fa fa-plus"></i>
+    </button>
+   
+</div>
+</div>
+<!-- Comments List -->
+<div class="comments-box">
+    <h6 class="mb-2">Commentaires :</h6>
+    <div class="comments-list" id="comments-list-{{ oeuvre.id }}">
+        {% for commentaire in oeuvre.commentaires %}
+            <div class="comment">
+                <span class="comment-user">{{ commentaire.user.nom }}</span>: 
+                <span class="comment-text">{{ commentaire.contenu }}</span>
+                <span class="comment-date" style="float: right; color: gray; font-size: 0.9rem;">
+                    {{ commentaire.date|date('d-m-Y H:i') }}
+                </span>
+
+               
+            </div>
+        {% else %}
+            <div class="no-comments">Aucun commentaire pour cette œuvre.</div>
+        {% endfor %}
+    </div>
 </div>
 {% endif %}
-
-        
-     
             </div>
         </div>
     </div>
-
 
     <!-- Modal Détails avec image à gauche et infos à droite -->
     <div class="modal fade" id="oeuvreModal{{ oeuvre.id }}" tabindex="-1" aria-labelledby="oeuvreModalLabel{{ oeuvre.id }}" aria-hidden="true">
@@ -88,7 +167,7 @@ créer une nouvelle collection
                             <p><strong>Matière:</strong> {{ oeuvre.matiere }}</p>
                             <p><strong>Couleur:</strong> {{ oeuvre.couleur }}</p>
                             <p><strong>Dimensions:</strong> {{ oeuvre.dimensions }}</p>
-                            <p><strong>Créateur:</strong> {{ oeuvre.createur }}</p>
+                            <p><strong>Créateur:</strong>  {{oeuvre.user.nom}}</p>
                             <p><strong>Catégorie:</strong> {{ oeuvre.categorie }}</p>
                         </div>
                     </div>
@@ -105,109 +184,10 @@ créer une nouvelle collection
                 </div><!-- /.row -->
             </div><!-- /.container -->
         </section><!-- /.collection-grid -->
-
-        <section class="cta-one" style="background-image: url(assets/images/shapes/cta-bg-1-1.jpg);">
-            <div class="container text-center">
-                <h3>More Than 1250 Exhibits!</h3>
-                <p>
-                    Every day more exhibits arrive in our museum. Do not <br>
-                    wait and buy a ticket now.
-                </p>
-                <div class="cta-one__btn-block">
-                    <a href="#" class="thm-btn cta-one__btn-one">Become A Member</a><!-- /.thm-btn cta-one__btn-one -->
-                    <a href="#" class="thm-btn cta-one__btn">Buy Online</a><!-- /.thm-btn cta-one__btn-two -->
-                </div>
-                <!-- /.cta-one__btn-block -->
-            </div>
-            <!-- /.container -->
-        </section>
-
     </div><!-- /.page-wrapper -->
-
-    <div class="search-popup">
-        <div class="search-popup__overlay custom-cursor__overlay">
-            <div class="cursor"></div>
-            <div class="cursor-follower"></div>
-        </div><!-- /.search-popup__overlay -->
-        <div class="search-popup__inner">
-            <form action="#" class="search-popup__form">
-                <input type="text" name="search" placeholder="Type here to Search....">
-                <button type="submit"><i class="fa fa-search"></i></button>
-            </form>
-        </div><!-- /.search-popup__inner -->
-    </div><!-- /.search-popup -->
-
-    <div class="side-content__block">
-        <div class="side-content__block-overlay custom-cursor__overlay">
-            <div class="cursor"></div>
-            <div class="cursor-follower"></div>
-        </div><!-- /.side-content__block-overlay -->
-        <div class="side-content__block-inner ">
-            <a href="index.html">
-                <img src="assets/images/logo-1-1.png" alt="" width="143">
-            </a>
-            <div class="side-content__block-about">
-                <h3 class="side-content__block__title">About Us</h3><!-- /.side-content__block__title -->
-                <p class="side-content__block-about__text">We must explain to you how all seds this mistakens idea off denouncing pleasures and praising pain was born and I will give you a completed accounts off the system and </p><!-- /.side-content__block-about__text -->
-                <a href="#" class="thm-btn side-content__block-about__btn">Get Consultation</a>
-            </div><!-- /.side-content__block-about -->
-            <hr class="side-content__block-line">
-            <div class="side-content__block-contact">
-                <h3 class="side-content__block__title">Contact Us</h3><!-- /.side-content__block__title -->
-                <ul class="side-content__block-contact__list">
-                    <li class="side-content__block-contact__list-item">
-                        <i class="fa fa-map-marker"></i>
-                        Rock St 12, Newyork City, USA
-                    </li><!-- /.side-content__block-contact__list-item -->
-                    <li class="side-content__block-contact__list-item">
-                        <i class="fa fa-phone"></i>
-                        <a href="tel:526-236-895-4732">(526) 236-895-4732</a>
-                    </li><!-- /.side-content__block-contact__list-item -->
-                    <li class="side-content__block-contact__list-item">
-                        <i class="fa fa-envelope"></i>
-                        <a href="mailto:example@mail.com">example@mail.com</a>
-                    </li><!-- /.side-content__block-contact__list-item -->
-                    <li class="side-content__block-contact__list-item">
-                        <i class="fa fa-clock"></i>
-                        Week Days: 09.00 to 18.00 Sunday: Closed
-                    </li><!-- /.side-content__block-contact__list-item -->
-                </ul><!-- /.side-content__block-contact__list -->
-            </div><!-- /.side-content__block-contact -->
-            <p class="side-content__block__text site-footer__copy-text"><a href="#">Muzex</a> <i class="fa fa-copyright"></i> 2020 All Right Reserved</p>
-        </div><!-- /.side-content__block-inner -->
-    </div><!-- /.side-content__block -->
-
-    <div class="side-menu__block">
-
-        <a href="#" class="side-menu__toggler side-menu__close-btn"><i class="fa fa-times"></i>
-            <!-- /.fa fa-close --></a>
-
-        <div class="side-menu__block-overlay custom-cursor__overlay">
-            <div class="cursor"></div>
-            <div class="cursor-follower"></div>
-        </div><!-- /.side-menu__block-overlay -->
-        <div class="side-menu__block-inner ">
-
-            <a href="index.html" class="side-menu__logo"><img src="assets/images/logo-light-1-1.png" alt="" width="143"></a>
-            <nav class="mobile-nav__container">
-                <!-- content is loading via js -->
-            </nav>
-            <p class="side-menu__block__copy">(c) 2020 <a href="#">Muzex</a> - All rights reserved.</p>
-            <div class="side-menu__social">
-                <a href="#"><i class="fab fa-facebook-f"></i></a>
-                <a href="#"><i class="fab fa-google-plus"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-                <a href="#"><i class="fab fa-pinterest-p"></i></a>
-            </div>
-        </div><!-- /.side-menu__block-inner -->
-    </div><!-- /.side-menu__block -->
-
-  
-
-    <a href="#" data-target="html" class="scroll-to-target scroll-to-top"><i class="fa fa-angle-up"></i></a>
     <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
@@ -235,9 +215,398 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 </script>
+
+{# scritttt rech #}
+{# <script>
+document.addEventListener("DOMContentLoaded", function() {
+    const searchForm = document.getElementById('search-form');
+    const searchInput = document.getElementById('search-input');
+    const oeuvresContainer = document.querySelector('.row.high-gutter.filter-layout.masonary-layout');
+
+    searchForm.addEventListener('submit', function(event) {
+        event.preventDefault(); // Empêcher la soumission du formulaire
+
+        const query = searchInput.value.trim();
+
+        if (query.length > 0) {
+            fetch(`/galerieceramic/search?query=${encodeURIComponent(query)}`, {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                },
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erreur réseau');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Effacer le contenu actuel
+                oeuvresContainer.innerHTML = '';
+
+                if (data.length === 0) {
+                    // Afficher un message si aucun résultat n'est trouvé
+                    oeuvresContainer.innerHTML = '<p class="text-center">Aucune œuvre trouvée.</p>';
+                } else {
+                    // Afficher les résultats de la recherche
+                    data.forEach(oeuvre => {
+                        const oeuvreHtml = `
+                            <div class="col-lg-4 col-md-6 filter-item masonary-item pic">
+                                <div class="collection-grid__single">
+                                    <div class="collection-grid__image">
+                                        <img src="/uploads/images/${oeuvre.image}" class="img-fluid rounded" alt="${oeuvre.nom}">
+                                        <a href="/galerieceramic/oeuvre/${oeuvre.id}" class="collection-grid__link" data-bs-toggle="modal" data-bs-target="#oeuvreModal${oeuvre.id}">+</a>
+                                    </div>
+                                    <div class="collection-grid__content">
+                                        <h3><a href="#">${oeuvre.nom}</a></h3>
+                                        <div class="button-group">
+                                            <a href="#" class="btn btn-danger delete-btn" data-url="/delete/${oeuvre.id}">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </a>
+                                            <a href="/edit-oeuvre/${oeuvre.id}" class="btn btn-primary">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        oeuvresContainer.insertAdjacentHTML('beforeend', oeuvreHtml);
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Erreur lors de la recherche:', error);
+                oeuvresContainer.innerHTML = '<p class="text-center">Une erreur s\'est produite lors de la recherche.</p>';
+            });
+        } else {
+            // Si la recherche est vide, recharger toutes les œuvres
+            window.location.reload();
+        }
+    });
+
+    // Gestion de la suppression
+    oeuvresContainer.addEventListener('click', function(event) {
+        if (event.target.classList.contains('delete-btn')) {
+            event.preventDefault();
+            const deleteUrl = event.target.getAttribute('data-url');
+
+            if (confirm('Êtes-vous sûr de vouloir supprimer cette œuvre ?')) {
+                fetch(deleteUrl, {
+                    method: 'DELETE',
+                })
+                .then(response => {
+                    if (response.ok) {
+                        window.location.reload(); // Recharger la page après la suppression
+                    } else {
+                        alert('Erreur lors de la suppression de l\'œuvre.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Erreur:', error);
+                });
+            }
+        }
+    });
+});
+</script> #}
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const searchForm = document.getElementById('search-form');
+    const searchInput = document.getElementById('search-input');
+    const filterType = document.getElementById('filter-type');
+    const oeuvresContainer = document.querySelector('.row.high-gutter.filter-layout.masonary-layout');
+
+    searchForm.addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent default form submission
+
+        const query = searchInput.value.trim();
+        const filterBy = filterType.value; 
+
+        if (query.length > 0) {
+            fetch(`/galerieceramic/search?query=${encodeURIComponent(query)}&filterBy=${filterBy}`, {
+                method: 'GET',
+                headers: { 'Accept': 'application/json' },
+            })
+            .then(response => response.ok ? response.json() : Promise.reject('Erreur réseau'))
+            .then(data => {
+                oeuvresContainer.innerHTML = ''; // Clear previous results
+
+                if (data.length === 0) {
+                    oeuvresContainer.innerHTML = '<p class="text-center">Aucune œuvre trouvée.</p>';
+                } else {
+                    data.forEach(oeuvre => {
+                        const oeuvreHtml = `
+                            <div class="col-lg-4 col-md-6 filter-item masonary-item pic">
+                                <div class="collection-grid__single">
+                                    <div class="collection-grid__image">
+                                        <img src="/uploads/images/${oeuvre.image}" class="img-fluid rounded" alt="${oeuvre.nom}">
+                                        <a href="/galerieceramic/oeuvre/${oeuvre.id}" class="collection-grid__link" data-bs-toggle="modal" data-bs-target="#oeuvreModal${oeuvre.id}">+</a>
+                                    </div>
+                                    <div class="collection-grid__content">
+                                        <h3><a href="#">${oeuvre.nom}</a></h3>
+                                        <p><strong>${oeuvre.categorie}</strong> | ${oeuvre.couleur} | ${oeuvre.type} | ${oeuvre.matiere} </p>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        oeuvresContainer.insertAdjacentHTML('beforeend', oeuvreHtml);
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Erreur:', error);
+                oeuvresContainer.innerHTML = '<p class="text-center">Une erreur s\'est produite.</p>';
+            });
+        } else {
+            window.location.reload();
+        }
+    });
+});
+</script>
+
+
+
+<script>
+function showComment(oeuvreId) {
+    // Get the comment form for the specified artwork (oeuvre)
+    const commentForm = document.getElementById('comment-form-' + oeuvreId);
+
+    // Toggle the visibility of the comment form
+    if (commentForm.style.display === 'none' || commentForm.style.display === '') {
+        commentForm.style.display = 'block'; // Show the comment form
+    } else {
+        commentForm.style.display = 'none'; // Hide the comment form
+    }
+}
+</script>
+
+{# jdid #}
+<script src="{{ asset('build/app.js') }}"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+ 
 
-        
-    
+<script>
+ function submitComment(oeuvreId) {
+    const commentText = document.getElementById('comment-text-' + oeuvreId).value;
+
+    if (commentText.trim() === '') {
+        alert('Please write a comment before submitting.');
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append('contenu', commentText);
+    formData.append('oeuvre_id', oeuvreId);  // Ensure oeuvreId is being appended
+
+    // Debugging: Log the FormData object to verify it's populated
+    for (let [key, value] of formData.entries()) { 
+        console.log(key + ': ' + value); 
+    }
+
+    fetch(`/commentaire/new/${oeuvreId}`, {
+        method: 'POST',
+        body: formData,
+    })
+    .then(response => {
+        if (!response.ok) {
+            return response.text().then(text => {
+                throw new Error(`Network response was not ok: ${text}`);
+            });
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log(data);  // Log server response
+        if (data.status === 'success') {
+            const commentHtml = `
+                <div class="comment">
+                    <span class="comment-user">${data.comment.user}</span>: 
+                    <span class="comment-text">${data.comment.contenu}</span>
+                    <span class="comment-date" style="float: right; color: gray; font-size: 0.9rem;">
+                        ${data.comment.date}
+                    </span>
+                </div>
+            `;
+            document.getElementById('comments-list-' + oeuvreId).innerHTML += commentHtml;
+            document.getElementById('comment-text-' + oeuvreId).value = '';
+            document.getElementById('comment-form-' + oeuvreId).style.display = 'none';
+        } else {
+            alert('There was an error submitting the comment.');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred. Please try again.');
+    });
+}
+
+</script>
+
+ 
+
+
+<style>
+/* Bouton principal avec un dégradé de bleu */
+.btn-nude {
+    background: linear-gradient(135deg, rgb(25, 75, 145) 0%, rgb(45, 103, 161) 100%);
+    border: 1px solid rgb(25, 75, 145);
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: background 0.3s ease, transform 0.2s ease;
+     min-width: 350px;
+}
+
+/* Effet au survol */
+.btn-nude:hover {
+    background: linear-gradient(135deg, rgb(20, 65, 125) 0%, rgb(35, 93, 150) 100%);
+    transform: translateY(-2px);
+}
+
+/* Effet au clic */
+.btn-nude:active {
+    background: linear-gradient(135deg, rgb(15, 55, 115) 0%, rgb(30, 85, 140) 100%);
+    transform: translateY(0);
+}
+
+/* Menu déroulant */
+.dropdown-menu {
+    border: 1px solid rgb(60, 120, 190);
+    border-radius: 8px;
+    background: linear-gradient(135deg, rgb(230, 245, 255) 0%, rgb(200, 230, 255) 100%);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+    padding: 10px;
+    min-width: 220px;
+}
+
+/* Items du menu */
+.dropdown-item {
+    color: rgb(15, 55, 115);
+    padding: 12px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    border-radius: 6px;
+    transition: background-color 0.3s ease;
+}
+
+/* Effet de survol des items */
+.dropdown-item:hover {
+    background: linear-gradient(135deg, rgb(180, 220, 255) 0%, rgb(150, 200, 255) 100%);
+}
+.dropdown-menu {
+    min-width: 500px; /* Ajuste selon tes besoins */
+}
+.actions-container {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Espace entre les éléments */
+}
+
+
+
+.comments-box {
+    max-height: 120px; /* Limit height */
+    overflow-y: auto; /* Scroll when too many comments */
+    background:rgb(243, 243, 243); /* Light background */
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.comments-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px; /* Space between comments */
+}
+
+.comment {
+    background: #e9ecef; /* Light grey bubble */
+    padding: 6px 12px;
+    border-radius: 15px;
+    display: inline-block;
+    max-width: 90%;
+}
+
+.comment-user {
+    font-weight: bold;
+    color: #007bff;
+}
+
+.comment-text {
+    color: #333;
+}
+
+.no-comments {
+    color: #888;
+    font-style: italic;
+}
+
+/* Container styling */
+.filter-box {
+  background-color: #fff;
+  max-width: 600px;  /* adjust to your preference */
+}
+
+/* Icon styling */
+.filter-icon {
+  display: inline-block;
+  font-size: 1.25rem;
+  color:rgb(25, 75, 145); /* or any accent color you prefer */
+  padding: 6px 10px;
+  background-color: #f8f9fa;
+  border-radius: 6px;
+}
+
+/* Input field adjustments */
+#search-input {
+  background-color: #f8f9fa;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  transition: box-shadow 0.2s;
+}
+
+/* Remove focus outline, add a subtle box-shadow */
+#search-input:focus {
+  outline: none;
+  box-shadow: 0 0 3px rgb(25, 75, 145));
+}
+
+/* Dropdown styling */
+#filter-type {
+  background-color: #f8f9fa;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  transition: box-shadow 0.2s;
+}
+
+#filter-type:focus {
+  outline: none;
+  box-shadow: 0 0 3px rgba(0, 123, 255, 0.25);
+}
+
+/* Button styling */
+.btn-primary {
+background-color: rgb(25, 75, 145); /* primary color */
+  border-radius: 6px;
+  font-size: 0.95rem;
+  padding: 8px 16px;
+  transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+.btn-primary:hover {
+  background-color: rgb(25, 75, 145); /* darken the primary color slightly */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+
+
+</style>
 {% endblock %}

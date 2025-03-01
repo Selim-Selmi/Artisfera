@@ -56,57 +56,111 @@ final class TextileController extends AbstractController
         ]);
     }
 
+    // #[Route('/new', name: 'app_textile_new', methods: ['GET', 'POST'])]
+    // public function new(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger, ParameterBagInterface $params): Response
+    // {
+    //     $textile = new Textile();
+    //     $form = $this->createForm(TextileType::class, $textile);
+    //     $form->handleRequest($request);
+    //     $user=$this->getUser();
+    //     $textile->setUserId($user->getId());
+    //     if ($form->isSubmitted() && $form->isValid()) {
+    //         /** @var UploadedFile $imageFile */
+    //         $imageFile = $form->get('imageFile')->getData();
+    
+    //         if ($imageFile) {
+    //             $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+    //             $safeFilename = $slugger->slug($originalFilename);
+    //             $newFilename = $safeFilename . '-' . uniqid() . '.' . $imageFile->guessExtension();
+    
+    //             // Use the correct uploads directory from services.yaml
+    //             $targetDirectory = $params->get('uploads_directory');
+    
+    //             // Ensure the directory exists
+    //             if (!file_exists($targetDirectory)) {
+    //                 mkdir($targetDirectory, 0777, true);
+    //             }
+    
+    //             try {
+    //                 $imageFile->move($targetDirectory, $newFilename);
+    //             } catch (FileException $e) {
+    //                 $this->addFlash('error', 'Error uploading file: ' . $e->getMessage());
+    //                 return $this->redirectToRoute('app_textile_new');
+    //             }
+    
+    //             $textile->setImage('/uploads/images/' . $newFilename);
+    //         } else {
+    //             $this->addFlash('error', 'Please upload an image.');
+    //             return $this->redirectToRoute('app_textile_new');
+    //         }
+    
+    //         $entityManager->persist($textile);
+    //         $entityManager->flush();
+    
+    //         return $this->redirectToRoute('app_textile_index');
+    //     }
+    
+    //     return $this->render('textile/new.html.twig', [
+    //         'textile' => $textile,
+    //         'form' => $form->createView(),
+    //         'user' =>$user
+    //     ]);
+    // }
     #[Route('/new', name: 'app_textile_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger, ParameterBagInterface $params): Response
     {
         $textile = new Textile();
         $form = $this->createForm(TextileType::class, $textile);
         $form->handleRequest($request);
-        $user=$this->getUser();
+        $user = $this->getUser();
         $textile->setUserId($user->getId());
+        // $textile->setUser($user);
+    
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var UploadedFile $imageFile */
             $imageFile = $form->get('imageFile')->getData();
-    
+        
             if ($imageFile) {
                 $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
                 $safeFilename = $slugger->slug($originalFilename);
                 $newFilename = $safeFilename . '-' . uniqid() . '.' . $imageFile->guessExtension();
-    
-                // Use the correct uploads directory from services.yaml
-                $targetDirectory = $params->get('uploads_directory');
-    
-                // Ensure the directory exists
+        
+                $targetDirectory = $params->get('textile_directory');
+        
                 if (!file_exists($targetDirectory)) {
                     mkdir($targetDirectory, 0777, true);
                 }
-    
+        
                 try {
                     $imageFile->move($targetDirectory, $newFilename);
                 } catch (FileException $e) {
                     $this->addFlash('error', 'Error uploading file: ' . $e->getMessage());
                     return $this->redirectToRoute('app_textile_new');
                 }
-    
-                $textile->setImage('/uploads/images/' . $newFilename);
+        
+                $textile->setImage('/uploads/textile/' . $newFilename);
             } else {
                 $this->addFlash('error', 'Please upload an image.');
                 return $this->redirectToRoute('app_textile_new');
             }
-    
+            $textile->setCollection($form->get('collection')->getData());
+
             $entityManager->persist($textile);
             $entityManager->flush();
-    
+        
+            // Redirection vers la page d'index après un ajout réussi
             return $this->redirectToRoute('app_textile_index');
         }
+        
     
         return $this->render('textile/new.html.twig', [
             'textile' => $textile,
             'form' => $form->createView(),
-            'user' =>$user
+            'user' => $user,
         ]);
     }
-
+    
+  
     #[Route('/{id}', name: 'app_textile_show', methods: ['GET'])]
     public function show(Textile $textile): Response
     {
@@ -226,16 +280,38 @@ final class TextileController extends AbstractController
     }
     
 
+    // #[Route('/{id}', name: 'app_textile_delete', methods: ['POST'])]
+    // public function delete(Request $request, Textile $textile, EntityManagerInterface $entityManager): Response
+    // {
+    //     if ($this->isCsrfTokenValid('delete'.$textile->getId(), $request->getPayload()->getString('_token'))) {
+    //         $entityManager->remove($textile);
+    //         $entityManager->flush();
+    //     }
+
+    //     return $this->redirectToRoute('app_textile_index', [], Response::HTTP_SEE_OTHER);
+    // }   
+
     #[Route('/{id}', name: 'app_textile_delete', methods: ['POST'])]
     public function delete(Request $request, Textile $textile, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$textile->getId(), $request->getPayload()->getString('_token'))) {
+        // Vérification du token CSRF
+        if ($this->isCsrfTokenValid('delete' . $textile->getId(), $request->request->get('_token'))) {
+            // Suppression de l'objet textile
             $entityManager->remove($textile);
             $entityManager->flush();
+    
+            // Ajout d'un message flash pour informer de la réussite
+            $this->addFlash('success', 'Textile supprimé avec succès.');
+        } else {
+            $this->addFlash('error', 'Token CSRF invalide.');
         }
+    
+        // Redirection vers la page d'index après la suppression
+        return $this->redirectToRoute('app_textile_index');
+    }
+    
 
-        return $this->redirectToRoute('app_textile_index', [], Response::HTTP_SEE_OTHER);
-    }    
+
     #[Route('b/{id}', name: 'app_textile_delete_back', methods: ['POST'])]
     public function deleteb(Request $request, Textile $textile, EntityManagerInterface $entityManager): Response
     {

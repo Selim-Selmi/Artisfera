@@ -1,0 +1,102 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Workshop page{% endblock %}
+
+{% block body %}
+{{ parent() }}
+    <h1>BIENVENUE ! </h1>
+
+    <div class="event-two event-two__event-1-page">
+        <div class="container">
+            <div class="text-center" style="margin-top: -100px;">
+                <a href="{{ path('app_workshops_new') }}" class="thm-btn">Creer un Workshop</a>
+            </div>
+            <br><br><br>
+
+            {% for workshop in workshops %}
+                <div class="event-two__single">
+                    <div class="row">
+                        <div class="col-lg-5 wow fadeInLeft" data-wow-duration="1500ms">
+                            <div class="event-two__image">
+                                <div class="event-two__image-inner">
+                                    <!-- Thumbnail de la vidéo -->
+                                    <video class="workshop-video" controls>
+                                        <source src="{{ asset('uploads/videos/' ~ workshop.video) }}" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                </div><!-- /.event-two__image-inner -->
+                            </div><!-- /.event-two__image -->
+                        </div><!-- /.col-lg-5 -->
+                        <div class="col-lg-7 d-flex">
+                            <div class="my-auto">
+                                <div class="event-two__content">
+                                    <div class="block-title event-two__title">
+                                        <h3>{{ workshop.titre }}</h3>
+                                    </div><!-- /.event-two__title -->
+                                    <p>{{ workshop.description }}</p>
+                                    <a href="{{ path('app_workshops_show', {'id': workshop.id}) }}" class="thm-btn event-two__btn">View Details</a>
+                                    <a href="{{ path('app_workshops_edit', {'id': workshop.id}) }}" class="thm-btn event-two__btn">Edit</a>
+                                </div><!-- /.event-two__content -->
+                            </div><!-- /.my-auto -->
+                        </div><!-- /.col-lg-7 -->
+                    </div><!-- /.row -->
+                </div><!-- /.event-two__single -->
+            {% else %}
+                <div class="text-center">
+                    <p>No workshops found</p>
+                </div>
+            {% endfor %}
+          
+        </div><!-- /.container -->
+    </div><!-- /.event-two -->
+
+    <style>
+        .workshop-video {
+            width: 100%;
+            height: 500px; /* Ajustable selon tes préférences */
+            object-fit: cover; /* Assure que la vidéo remplit bien la zone sans distorsion */
+        }
+
+
+       
+        h1 {
+            color: black; /* Couleur du texte */
+            font-weight: bold; /* Texte en gras */
+            animation: mouvement 2s infinite alternate; /* Effet de mouvement */
+             margin-top: 100px;
+        }
+
+        @keyframes mouvement {
+            0% {
+                transform: translateX(0);
+            }
+            50% {
+                transform: translateX(20px);
+            }
+            100% {
+                transform: translateX(0);
+            }
+        }
+  
+    </style>
+
+     <style>
+        h3 {
+            color: black; /* Couleur du texte */
+            font-weight: bold; /* Texte en gras */
+            animation: mouvement 2s infinite alternate; /* Effet de mouvement */
+        }
+
+        @keyframes mouvement {
+            0% {
+                transform: translateX(0);
+            }
+            50% {
+                transform: translateX(20px);
+            }
+            100% {
+                transform: translateX(0);
+            }
+        }
+    </style>
+{% endblock %}

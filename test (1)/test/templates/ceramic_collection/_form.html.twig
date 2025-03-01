@@ -1,4 +1,25 @@
-{{ form_start(form) }}
+{# {{ form_start(form) }}
     {{ form_widget(form) }}
     <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }} #}
+{{ form_start(form) }}
+    <div class="form-group">
+        <label for="{{ form.nom_c.vars.id }}" class="form-label">
+            {{ form_label(form.nom_c) }}
+        </label>
+        {{ form_widget(form.nom_c, {'attr': {'class': 'form-control'}}) }}
+        {{ form_errors(form.nom_c) }}
+    </div>
+
+    <div class="form-group">
+        <label for="{{ form.description_c.vars.id }}" class="form-label">
+            {{ form_label(form.description_c) }}
+        </label>
+        {{ form_widget(form.description_c, {'attr': {'class': 'form-control', 'rows': '4'}}) }}
+        {{ form_errors(form.description_c) }}
+    </div>
+
+    <div class="form-group text-center mt-4">
+        <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
+    </div>
 {{ form_end(form) }}

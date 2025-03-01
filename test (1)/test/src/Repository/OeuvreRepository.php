@@ -16,6 +16,23 @@ class OeuvreRepository extends ServiceEntityRepository
         parent::__construct($registry, Oeuvre::class);
     }
 
+    public function findBySearchQuery(string $query): array
+    {
+        $queryBuilder = $this->createQueryBuilder('o');
+        $queryBuilder->where($queryBuilder->expr()->like('o.nom', ':query'))
+            ->orWhere($queryBuilder->expr()->like('o.description', ':query'))
+            ->orWhere($queryBuilder->expr()->like('o.type', ':query'))
+            ->orWhere($queryBuilder->expr()->like('o.matiere', ':query'))
+            ->orWhere($queryBuilder->expr()->like('o.couleur', ':query'))
+            // ->orWhere($queryBuilder->expr()->like('o.createur', ':query'))
+            ->orWhere($queryBuilder->expr()->like('o.categorie', ':query'))
+            ->setParameter('query', '%' . $query . '%');
+        
+        return $queryBuilder->getQuery()->getResult();
+        
+    }
+    
+
     //    /**
     //     * @return Oeuvre[] Returns an array of Oeuvre objects
     //     */

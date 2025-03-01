@@ -22,6 +22,7 @@ use App\Form\ModifierProfileAdminType;
 use App\Repository\MusiqueRepository;
 use App\Repository\PeintureRepository;
 use App\Repository\StyleRepository;
+use App\Repository\OeuvreRepository;
 use App\Form\AddEditPeintureType;
 use App\Repository\EventRepository;
 
@@ -55,15 +56,17 @@ class UserController extends AbstractController
          ]);
     }
     #[Route('/accueil', name: 'app_membre')]
-    public function home(UserRepository $userRepository,Request $request,PeintureRepository $peintureRepository,MusiqueRepository $musiqueRepository,EventRepository $eventRepository): Response
+    public function home(UserRepository $userRepository,Request $request,PeintureRepository $peintureRepository,MusiqueRepository $musiqueRepository,EventRepository $eventRepository,OeuvreRepository $oeuvreRepository): Response
     {
         $eventsDB = $eventRepository->findAll();
         $peinturesDB = $peintureRepository->findAll();
         $musiquesDB = $musiqueRepository->findAll();
+        $oeuvresDB = $oeuvreRepository->findAll();
             return $this->render('user/frontMembre.html.twig',[
                 'peintures' => $peinturesDB,
                 'Musiques' => $musiquesDB,
-                'events'=> $eventsDB
+                'events'=> $eventsDB,
+                'oeuvres'=> $oeuvresDB
             ]);
 
     }    

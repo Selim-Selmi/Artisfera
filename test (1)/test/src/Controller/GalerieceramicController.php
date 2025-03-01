@@ -16,6 +16,8 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
+
 
 final class GalerieceramicController extends AbstractController
 {
@@ -32,7 +34,7 @@ public function ajoutOeuvre(Request $request, EntityManagerInterface $entityMana
 {
     $oeuvre = new Oeuvre();
     $user=$this->getUser();
-    $oeuvre->setUserId($user->getId());
+    $oeuvre->setUser($user);
     $form = $this->createForm(OeuvreType::class, $oeuvre);
     $form->handleRequest($request);
 
@@ -61,12 +63,34 @@ public function ajoutOeuvre(Request $request, EntityManagerInterface $entityMana
     ]);
 }
 
-//search function 
+//recherche 
+  
+      #[Route('/galerieceramic/search', name: "app_search", methods: ['GET'])]
+    public function search(Request $request, OeuvreRepository $oeuvreRepository): JsonResponse
+    {
+        $query = $request->query->get('query', '');
+        $oeuvres = $oeuvreRepository->findBySearchQuery($query);
 
+        $results = [];
+        foreach ($oeuvres as $oeuvre) {
+            $results[] = [
+                'id' => $oeuvre->getId(),
+                'nom' => $oeuvre->getNom(),
+                // 'image' => $this->getParameter('uploads_directory') . '/' . $oeuvre->getImage(),
+                'image' => $oeuvre->getImage(),
+                'type' => $oeuvre->getType(),
+                'description' => $oeuvre->getDescription(),
+                'matiere' => $oeuvre->getMatiere(),
+                'couleur' => $oeuvre->getCouleur(),
+                'dimensions' => $oeuvre->getDimensions(),
+                // 'createur' => $oeuvre->getCreateur(),
+                'categorie' => $oeuvre->getCategorie(),
+         
+            ];
+        }
 
-
-
-
+        return new JsonResponse($results);
+    }
 
 //details
     #[Route('/galerieceramic/oeuvre/{id}', name: 'app_oeuvre_details')]
